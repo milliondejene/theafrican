@@ -23,6 +23,16 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        url: 'http://wp.theafrican.co/graphql',  // Replace with your WordPress GraphQL endpoint
+        verbose: true,
+        develop: {
+          hardCacheMediaFiles: true,
+        },
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
