@@ -1,10 +1,11 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-
+import Layout from "../components/layout/Layout";
 const SubcategoryTemplate = ({ data }) => {
   const { name, posts, parent } = data.wpCategory;
 
   return (
+    <Layout>
     <div>
       <header>
         <h1>{name}</h1>
@@ -31,6 +32,7 @@ const SubcategoryTemplate = ({ data }) => {
         )}
       </section>
     </div>
+    </Layout>
   );
 };
 

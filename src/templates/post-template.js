@@ -1,10 +1,11 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-
+import Layout from "../components/layout/Layout";
 const PostTemplate = ({ data }) => {
   const { title, content, date, author, categories } = data.wpPost;
 
   return (
+    <Layout>
     <article>
       <header>
         <h1>{title}</h1>
@@ -35,6 +36,7 @@ const PostTemplate = ({ data }) => {
         <p>Back to <Link to="/">Homepage</Link></p>
       </footer>
     </article>
+    </Layout>
   );
 };
 
