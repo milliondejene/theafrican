@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Link, useStaticQuery, graphql } from "gatsby";
+import React, { useState, useEffect } from "react";
+import { Link, useStaticQuery, graphql, navigate } from "gatsby";
+import { useLocation } from "@reach/router";
 
 const Header = () => {
+  const location = useLocation(); // To track the current URL
   const data = useStaticQuery(graphql`
     query {
       allWpCategory {
@@ -18,13 +20,31 @@ const Header = () => {
   `);
 
   const categories = data.allWpCategory.edges
-    .map(edge => edge.node)
-    .filter(category => category.parentId === null && category.slug !== "uncategorized");
+    .map((edge) => edge.node)
+    .filter((category) => category.parentId === null && category.slug !== "uncategorized");
 
-  const [activeCategory, setActiveCategory] = useState(null);
+  // Default active category is "Africa"
+  const defaultCategorySlug = "africa";
+
+  const [activeCategory, setActiveCategory] = useState(defaultCategorySlug);
+
+  useEffect(() => {
+    // Determine the active top-level category based on the current URL or fallback to default
+    const currentPath = location.pathname.split("/").filter(Boolean); // Extract path segments
+    const currentCategorySlug = currentPath[1] || null;
+    setActiveCategory(currentCategorySlug || defaultCategorySlug);
+  }, [location]);
+
+  // Get subcategories for the active category
+  const subcategories =
+    data.allWpCategory.edges
+      .map((edge) => edge.node)
+      .filter((subcategory) => subcategory.parentId === categories.find((cat) => cat.slug === activeCategory)?.id) || [];
 
   const handleCategoryClick = (categorySlug) => {
-    setActiveCategory(activeCategory === categorySlug ? null : categorySlug);
+    // Set the active category and navigate to its page
+    setActiveCategory(categorySlug);
+    navigate(`/category/${categorySlug}/`);
   };
 
   return (
@@ -32,8 +52,9 @@ const Header = () => {
       <style>
         {`
           .header {
-            background-color: #f8f9fa;
             padding: 1rem;
+            background-color: #222; /* Dark background for header */
+            color: #fff; /* White text */
           }
 
           .nav-list {
@@ -53,81 +74,80 @@ const Header = () => {
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            color: #6f4f28; /* Primary brown color */
-            font-weight: bold;
+            color: #fff;
             text-transform: uppercase;
-            transition: color 0.3s ease;
           }
 
-          .category-button:hover {
-            color: #4b3a2e; /* Darker brown for hover effect */
+          .category-button.active {
+            font-weight: bold;
+            color: #FFD700; /* Gold for active category */
           }
 
-          .submenu {
-            list-style: none;
-            margin: 0;
-            padding: 0.5rem;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #ffffff;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            width: 200px;
-            border-radius: 4px;
+          .submenu-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #333; /* Slightly lighter background for submenu */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
           }
 
-          .submenu-item {
-            margin: 0.5rem 0;
+          .subcategories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
           }
 
-          .submenu-link {
+          .subcategory-link {
             text-decoration: none;
-            color: #6f4f28; /* Primary brown color for subcategory links */
-            transition: color 0.3s ease;
+            color: #8B4513; /* Brown text for submenu links */
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            background: #444; /* Background for submenu links */
+            border-radius: 4px;
+            transition: background 0.3s;
           }
 
-          .submenu-link:hover {
-            color: #4b3a2e; /* Darker brown for subcategory link hover */
+          .subcategory-link:hover {
+            background: #555;
           }
         `}
       </style>
 
       <nav>
         <ul className="nav-list">
-          {categories.map(category => (
+          {categories.map((category) => (
             <li key={category.id} className="nav-item">
               <button
                 onClick={() => handleCategoryClick(category.slug)}
-                className="category-button"
+                className={`category-button ${
+                  activeCategory === category.slug ? "active" : ""
+                }`}
               >
-                <Link
-                  to={`/category/${category.slug}/`}
-                  className="category-link"
-                >
-                  {category.name}
-                </Link>
+                {category.name}
               </button>
-              {activeCategory === category.slug && (
-                <ul className="submenu">
-                  {data.allWpCategory.edges
-                    .map(edge => edge.node)
-                    .filter(subcategory => subcategory.parentId === category.id)
-                    .map(subcategory => (
-                      <li key={subcategory.id} className="submenu-item">
-                        <Link
-                          to={`/category/${category.slug}/${subcategory.slug}/`}
-                          className="submenu-link"
-                        >
-                          {subcategory.name}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              )}
             </li>
           ))}
         </ul>
       </nav>
+
+      {/* Submenu Container */}
+      <div className="submenu-container">
+        {subcategories.length > 0 ? (
+          <div className="subcategories">
+            {subcategories.map((subcategory) => (
+              <Link
+                key={subcategory.id}
+                to={`/category/${activeCategory}/${subcategory.slug}/`}
+                className="subcategory-link"
+              >
+                {subcategory.name}
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p>No subcategories available.</p>
+        )}
+      </div>
     </header>
   );
 };
