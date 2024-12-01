@@ -32,13 +32,17 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
+  if (result.errors) {
+    throw result.errors;
+  }
+
   const categories = result.data.allWpCategory.edges.map(edge => edge.node);
 
   // Create pages for all categories (including subcategories)
   categories.forEach(category => {
-    // Create a category page
+    // Create a category page with a clean URL
     createPage({
-      path: `/category/${category.slug}/`,
+      path: `/${category.slug}/`,  // Clean URL, removing "/category/"
       component: path.resolve(`./src/templates/category-template.js`),
       context: {
         id: category.id,
@@ -47,10 +51,10 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     });
 
-    // Create pages for subcategories
+    // Create pages for subcategories with clean URLs
     category.wpChildren?.nodes?.forEach(subcategory => {
       createPage({
-        path: `/category/${category.slug}/${subcategory.slug}/`,
+        path: `/${category.slug}/${subcategory.slug}/`,  // Clean URL
         component: path.resolve(`./src/templates/subcategory-template.js`),
         context: {
           id: subcategory.id,
@@ -61,10 +65,10 @@ exports.createPages = async ({ graphql, actions }) => {
       });
     });
 
-    // Create pages for posts within the category
+    // Create pages for posts within the category with clean URLs
     category.posts?.nodes?.forEach(post => {
       createPage({
-        path: `/post/${post.slug}/`,
+        path: `/post/${post.slug}/`,  // Clean URL
         component: path.resolve(`./src/templates/post-template.js`),
         context: {
           id: post.id,

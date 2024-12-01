@@ -22,7 +22,7 @@ const CategoryTemplate = ({ data }) => {
               font-size: 2rem;
               text-align: center;
               margin-bottom: 1.5rem;
-              color: #4CAF50; /* Green for the main heading */
+              color: #4CAF50;
             }
 
             section {
@@ -32,7 +32,7 @@ const CategoryTemplate = ({ data }) => {
             section h2 {
               font-size: 1.5rem;
               margin-bottom: 1rem;
-              color: #555; /* Darker gray for section titles */
+              color: #555;
             }
 
             ul {
@@ -47,23 +47,22 @@ const CategoryTemplate = ({ data }) => {
 
             li a {
               text-decoration: none;
-              color: #0066cc; /* Blue for links */
+              color: #0066cc;
               font-size: 1rem;
               transition: color 0.3s ease;
             }
 
             li a:hover {
-              color: #004999; /* Darker blue on hover */
+              color: #004999;
               text-decoration: underline;
             }
 
             p {
-              color: #777; /* Light gray for empty state text */
+              color: #777;
               font-size: 1rem;
               text-align: center;
             }
 
-            /* Divider for sections */
             .category-page section + section {
               border-top: 1px solid #ddd;
               padding-top: 1rem;
@@ -82,7 +81,7 @@ const CategoryTemplate = ({ data }) => {
             <ul>
               {wpChildren.nodes.map((subcategory) => (
                 <li key={subcategory.id}>
-                  <Link to={`/category/${slug}/${subcategory.slug}`}>
+                  <Link to={`/${slug}/${subcategory.slug}`}>
                     {subcategory.name}
                   </Link>
                 </li>

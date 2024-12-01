@@ -62,13 +62,13 @@ const SubcategoryTemplate = ({ data }) => {
             }
 
             ul li a {
-              color: #8B4513; /* Brown color for post links */
+              color: #8B4513;
               text-decoration: none;
               transition: color 0.3s ease;
             }
 
             ul li a:hover {
-              color: #D2691E; /* Darker brown on hover */
+              color: #D2691E;
               text-decoration: underline;
             }
 
@@ -82,7 +82,7 @@ const SubcategoryTemplate = ({ data }) => {
         <header>
           <h1>{name}</h1>
           {parent ? (
-            <Link to={`/category/${parent.slug}`}>Back to {parent.name}</Link>
+            <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>
           ) : (
             <p>No parent category available.</p>
           )}
