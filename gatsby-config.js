@@ -29,7 +29,7 @@ module.exports = {
         url: 'http://wp.theafrican.co/graphql',  // Replace with your WordPress GraphQL endpoint
         verbose: true,
         develop: {
-          hardCacheMediaFiles: true,
+          hardCacheMediaFiles: false,
         },
       },
     },
