@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout/Layout";
+import { formatDistanceToNow } from "date-fns";
 
 const SubcategoryTemplate = ({ data }) => {
   const { name, posts, parent } = data.wpCategory;
@@ -16,16 +17,18 @@ const SubcategoryTemplate = ({ data }) => {
               color: #333;
             }
 
-            header {
-              margin-bottom: 2rem;
-              border-bottom: 2px solid #ddd;
-              padding-bottom: 1rem;
-            }
-
             header h1 {
               font-size: 2.5rem;
               margin: 0 0 1rem;
-              color: #444;
+            }
+
+            header h1 span.parent {
+              color: red;
+              font-weight: bold;
+            }
+
+            header h1 span.subcategory {
+              color: black;
             }
 
             header a {
@@ -38,71 +41,175 @@ const SubcategoryTemplate = ({ data }) => {
               text-decoration: underline;
             }
 
-            section {
+        
+
+            .grid-container {
+              display: grid;
+              grid-template-columns: 3fr 1fr; /* Left for posts grid, right for post list */
+              gap: 1.5rem;
               margin-top: 2rem;
             }
 
-            section h2 {
-              font-size: 2rem;
-              color: #555;
-              margin-bottom: 1rem;
-              border-bottom: 2px solid #eee;
-              padding-bottom: 0.5rem;
+            .posts-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr); /* 3 posts per row */
+              gap: 1.5rem;
             }
 
-            ul {
+            .grid-item {
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              padding: 1.5rem;
+              background-color: #fff;
+              transition: transform 0.2s ease;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+            }
+
+            .grid-item:hover {
+              transform: translateY(-5px);
+            }
+
+            .grid-item img {
+              width: 100%;
+              height: 180px;
+              object-fit: cover;
+              border-radius: 4px;
+              margin-bottom: 0.5rem;
+            }
+
+            .grid-item h3 {
+              font-size: 1.25rem;
+              color: #0066cc;
+              margin-bottom: 0.5rem;
+            }
+
+            .grid-item h3 a {
+              text-decoration: none;
+            }
+
+            .grid-item h3 a:hover {
+              text-decoration: underline;
+            }
+
+            .post-meta {
+              font-size: 0.85rem;
+              color: #777;
+              margin-top: 0.5rem;
+            }
+
+            .vertical-list {
+              padding: 1.5rem;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              background-color: #f9f9f9;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              display: flex;
+              flex-direction: column;
+            }
+
+            .vertical-list h2 {
+              font-size: 1.5rem;
+              margin-bottom: 1rem;
+            }
+
+            .vertical-list ul {
               list-style: none;
               padding: 0;
               margin: 0;
             }
 
-            ul li {
-              margin-bottom: 1rem;
-              font-size: 1.2rem;
+            .vertical-list li {
+              margin-bottom: 0.75rem;
             }
 
-            ul li a {
-              color: #8B4513;
+            .vertical-list li a {
               text-decoration: none;
+              color: #0066cc;
+              font-size: 1rem;
               transition: color 0.3s ease;
             }
 
-            ul li a:hover {
-              color: #D2691E;
+            .vertical-list li a:hover {
+              color: #004999;
               text-decoration: underline;
             }
 
-            p {
+            .vertical-list .post-meta {
+              font-size: 0.85rem;
+              color: #555;
+            }
+
+            .no-posts {
               font-size: 1rem;
               color: #666;
+              margin-top: 2rem;
+              text-align: center;
             }
           `}
         </style>
 
         <header>
-          <h1>{name}</h1>
-          {parent ? (
-            <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>
-          ) : (
-            <p>No parent category available.</p>
-          )}
+          <h1>
+            {parent ? (
+              <>
+                <span className="parent">{parent.name}</span>:{" "}
+                <span className="subcategory">{name} Page</span>
+              </>
+            ) : (
+              <span className="subcategory">{name} Page</span>
+            )}
+          </h1>
+          {parent && <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>}
         </header>
 
+        {/* Separator Line */}
+        <div className="separator"></div>
+
         {/* Posts Section */}
-        <section>
-          <h2>Posts</h2>
-          {posts?.nodes?.length > 0 ? (
-            <ul>
+        {posts?.nodes?.length > 0 ? (
+          <div className="grid-container">
+            {/* Left side - Grid of Posts */}
+            <div className="posts-grid">
               {posts.nodes.map((post) => (
-                <li key={post.id}>
-                  <Link to={`/post/${post.slug}`}>{post.title}</Link>
-                </li>
+                <div className="grid-item" key={post.id}>
+                  {post.featuredImage?.node?.sourceUrl && (
+                    <img
+                      src={post.featuredImage.node.sourceUrl}
+                      alt={post.title}
+                    />
+                  )}
+                  <h3>
+                    <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <div className="post-meta">
+                    {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
+                  </div>
+                </div>
               ))}
-            </ul>
-          ) : (
-            <p>No posts available in this subcategory.</p>
-          )}
-        </section>
+            </div>
+
+            {/* Right side - Post List (Vertical list of posts) */}
+            <div className="vertical-list">
+              <h2>Posts List</h2>
+              <ul>
+                {posts.nodes.map((post) => (
+                  <li key={post.id}>
+                    <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                    <div className="post-meta">
+                      {post.categories?.nodes[0]?.name || "Uncategorized"} •{" "}
+                      {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="no-posts">No posts available in this subcategory.</div>
+        )}
       </div>
     </Layout>
   );
@@ -126,6 +233,17 @@ export const query = graphql`
           id
           title
           slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          categories {
+            nodes {
+              name
+            }
+          }
         }
       }
     }

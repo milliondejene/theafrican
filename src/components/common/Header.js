@@ -26,7 +26,7 @@ const Header = () => {
     );
 
   const defaultCategorySlug = "africa";
-  const [activeCategory, setActiveCategory] = useState(defaultCategorySlug);
+  const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSubcategoriesVisible, setIsSubcategoriesVisible] = useState(true);
@@ -36,15 +36,15 @@ const Header = () => {
     const currentCategorySlug = currentPath[0] || null;
     const currentSubcategorySlug = currentPath[1] || null;
 
-    if (currentPath[0] === "post" && currentPath.length >= 2) {
+    // Set active category based on the URL
+    if (currentPath.length === 0) {
+      setActiveCategory(null);
+      setActiveSubcategory(null);
+      setIsSubcategoriesVisible(false);
+    } else if (currentPath[0] === "post" && currentPath.length >= 2) {
       const postSlug = currentPath[1];
       const postCategorySlug = getPostCategory(postSlug);
-
-      if (postCategorySlug) {
-        setActiveCategory(postCategorySlug);
-      } else {
-        setActiveCategory(defaultCategorySlug);
-      }
+      setActiveCategory(postCategorySlug || defaultCategorySlug);
     } else if (currentCategorySlug) {
       setActiveCategory(currentCategorySlug);
       setActiveSubcategory(currentSubcategorySlug || null);
@@ -57,17 +57,13 @@ const Header = () => {
     const handleScroll = () => {
       if (window.scrollY > 100) {
         setIsScrolled(true);
-        setIsSubcategoriesVisible(false); // Hide subcategories when scrolling down
+        setIsSubcategoriesVisible(false);
       } else {
         setIsScrolled(false);
-        setIsSubcategoriesVisible(true); // Show subcategories when scrolling up
+        setIsSubcategoriesVisible(true);
       }
     };
-
-    // Add scroll event listener
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener on component unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -75,7 +71,6 @@ const Header = () => {
     const postCategories = {
       "the-making-of-a-great-book-using-coffee-for-creative-thinking": "coffee",
     };
-
     return postCategories[postSlug] || null;
   };
 
@@ -103,7 +98,7 @@ const Header = () => {
       <style>
         {`
           .header {
-            padding: 0.5rem 1rem;
+        
             background-color: #fff;
             color: #000;
             text-align: center;
@@ -124,6 +119,7 @@ const Header = () => {
             font-size: 1.5rem;
             font-weight: bold;
             color: #000;
+            text-align: center;
           }
 
           .nav-list {
@@ -140,6 +136,7 @@ const Header = () => {
           }
 
           .category-button {
+            font-weight: bold;
             background: transparent;
             border: none;
             cursor: pointer;
@@ -152,7 +149,7 @@ const Header = () => {
           }
 
           .category-button.active {
-            border-bottom: 2px solid red;
+            border-bottom: 3px solid red;
             color: #000;
           }
 
@@ -161,16 +158,15 @@ const Header = () => {
           }
 
           .horizontal-line {
-            margin-top: 1rem;
+         
             border-top: 1px solid #ddd;
             width: 100%;
           }
 
           .submenu-container {
             max-width: 100%;
-            transition: opacity 0.3s ease-in-out;
-            visibility: ${isSubcategoriesVisible ? "visible" : "hidden"};
-            opacity: ${isSubcategoriesVisible ? "1" : "0"};
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            display: ${isSubcategoriesVisible ? "block" : "none"};
           }
 
           .subcategories {
@@ -198,10 +194,9 @@ const Header = () => {
         `}
       </style>
 
-      {/* Logo Container */}
       <div className="logo-container">TheAfrican</div>
       <hr className="separator" />
-      {/* Navigation Menu */}
+
       <nav>
         <ul className="nav-list">
           {categories.map((category) => (
@@ -219,10 +214,8 @@ const Header = () => {
         </ul>
       </nav>
 
-      {/* Horizontal Line */}
       <div className="horizontal-line" />
 
-      {/* Submenu Container */}
       <div className="submenu-container">
         {subcategories.length > 0 ? (
           <div className="subcategories">
