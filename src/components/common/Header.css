@@ -1,170 +1,213 @@
-/* Header.css */
-
 /* Base Header styles */
 .header {
-    background-color: #fff;
-    color: #000;
-    text-align: center;
-    transition: padding 0.3s ease-in-out;
-    position: relative;
-  }
-  
-  .header.scrolled {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 0.5rem 1rem;
-  }
-  
-  .logo-container {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #000;
-    text-align: center;
-    position: relative; /* Ensure absolute positioning for the buttons */
-    padding: 0 20px;
-  }
-  
-  /* Position the left and right buttons */
-  .logo-container button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: #000;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .logo-container button:first-child {
-    left: 0;
-  }
-  
-  .logo-container button:last-child {
-    right: 0;
-  }
-  
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  transition: padding 0.3s ease-in-out;
+  position: relative;
+}
+
+.header.scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+}
+
+.logo-container {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  position: relative; /* Ensure absolute positioning for the buttons */
+  padding: 0 20px;
+}
+
+/* Position the left and right buttons */
+.logo-container button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #000;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logo-container button:first-child {
+  left: 0;
+}
+
+.logo-container button:last-child {
+  right: 0;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.category-button {
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #000;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  border-bottom: 2px solid transparent;
+}
+
+.category-button.active {
+  border-bottom: 3px solid red;
+  color: #000;
+}
+
+.category-button:hover {
+  color: #555;
+}
+
+.horizontal-line {
+  border-top: 1px solid #ddd;
+  width: 100%;
+}
+
+.submenu-container {
+  max-width: 100%;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  display: block; /* Default visible, controlled by JS logic */
+}
+
+.subcategories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.subcategory-link {
+  text-decoration: none;
+  color: #000;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.subcategory-link.active {
+  color: red;
+}
+
+.subcategory-link:hover {
+  color: red;
+}
+
+/* Side menu styles */
+.side-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 20;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu .category-item {
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.side-menu .subcategory-item {
+  padding: 1rem;
+  padding-left: 2rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.menu-overlay.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  /* Hide the category and subcategory on mobile */
   .nav-list {
-    list-style: none;
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .nav-item {
-    position: relative;
-  }
-  
-  .category-button {
-    font-weight: bold;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #000;
-    text-transform: uppercase;
-    padding: 0.2rem 0.5rem;
-    transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    border-bottom: 2px solid transparent;
-  }
-  
-  .category-button.active {
-    border-bottom: 3px solid red;
-    color: #000;
-  }
-  
-  .category-button:hover {
-    color: #555;
-  }
-  
-  .horizontal-line {
-    border-top: 1px solid #ddd;
-    width: 100%;
+      display: none;
   }
   
   .submenu-container {
-    max-width: 100%;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    display: block; /* Default visible, controlled by JS logic */
+      display: none;
   }
   
-  .subcategories {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  /* Adjust the logo and buttons for smaller screens */
+  .logo-container {
+      font-size: 1.25rem;
   }
   
-  .subcategory-link {
-    text-decoration: none;
-    color: #000;
-    font-size: 0.8rem;
-    padding: 0.3rem 0.6rem;
-    transition: color 0.3s ease-in-out;
+  /* Make the header more compact on mobile */
+  .header {
+      padding: 0.5rem;
   }
   
-  .subcategory-link.active {
-    color: red;
+  .logo-container button {
+      font-size: 1.25rem;
   }
-  
-  .subcategory-link:hover {
-    color: red;
-  }
-  
-  /* Side menu styles */
+
+  /* Side menu styles for mobile */
   .side-menu {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 25%;
-    background-color: #fff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 20;
-    padding: 20px;
-    box-sizing: border-box;
+      width: 75%;
+      padding: 15px;
   }
-  
-  .side-menu.open {
-    transform: translateX(0);
-  }
-  
+
   .side-menu .category-item {
-    padding: 1rem;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
+      padding: 0.8rem;
   }
-  
-  .side-menu .subcategory-item {
-    padding: 1rem;
-    padding-left: 2rem;
-    cursor: pointer;
-    border-bottom: 1px solid #f2f2f2;
+}
+
+@media (max-width: 480px) {
+  .logo-container {
+      font-size: 1.1rem;
   }
-  
-  .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 10;
+
+  .logo-container button {
+      font-size: 1rem;
   }
-  
-  .menu-overlay.open {
-    visibility: visible;
-    opacity: 1;
-  }
-  
+}

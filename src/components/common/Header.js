@@ -7,6 +7,8 @@ import useActiveCategory from "../../hooks/useActiveCategory"; // Custom hook fo
 import SideMenu from "../SideMenu"; // Import the SideMenu component
 import Navigation from "./Navigation"; // Import the Navigation component
 import "./Header.css";
+import { MdSearch } from 'react-icons/md';
+
 
 const Header = () => {
   const location = useLocation();
@@ -46,7 +48,7 @@ const Header = () => {
         TheAfrican
         {/* Right button - toggles between 'o.' and search icon */}
         <button className="search-icon">
-           🔍{/* Change icon when the menu is open */}
+        <MdSearch size={30} color="#333" />
         </button>
       </div>
       <hr className="separator" />
