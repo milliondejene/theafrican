@@ -1,31 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "gatsby";
+import React from "react";
 
 const Footer = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Replace with your WordPress REST API endpoint
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('https://your-wordpress-site.com/wp-json/wp/v2/categories');
-        const data = await response.json();
-        setCategories(data);  // Store fetched categories in state
-        setLoading(false);  // Update loading state
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        setLoading(false);  // Update loading state even if there's an error
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  if (loading) {
-    return <p>Loading categories...</p>;
-  }
-
   return (
     <footer className="footer">
       <style>
@@ -47,7 +22,6 @@ const Footer = () => {
             margin-bottom: 1rem;
             flex: 1;
           }
-
           .footer-bottom {
             width: 100%;
             text-align: left;
@@ -78,17 +52,6 @@ const Footer = () => {
       </style>
 
       <div className="branding">TheAfrican</div>
-
-      <div className="menu-section">
-        <ul>
-          {/* Dynamically fetched categories */}
-          {categories.map((category) => (
-            <li key={category.id}>
-              <Link to={`/${category.slug}`}>{category.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
 
       <div className="footer-bottom">
         <div className="copyright">
