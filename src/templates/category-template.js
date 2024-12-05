@@ -5,7 +5,6 @@ import Layout from "../components/layout/Layout";
 const CategoryTemplate = ({ data }) => {
   const { name, posts } = data.wpCategory;
 
-  // Helper function to calculate relative time
   const getTimeAgo = (dateString) => {
     const postDate = new Date(dateString);
     const currentDate = new Date();
@@ -16,7 +15,6 @@ const CategoryTemplate = ({ data }) => {
     return `${timeDiff} days ago`;
   };
 
-  // Helper function to truncate text
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return `${text.substring(0, maxLength)}...`;
@@ -42,26 +40,22 @@ const CategoryTemplate = ({ data }) => {
             }
 
             .separator {
-            
-            
+              margin-bottom: 1rem;
             }
 
-            /* Updated grid layout for 3 posts and 1 post list */
             .grid-container {
               display: grid;
-              grid-template-columns: 3fr 1fr; /* 3/4 for posts, 1/4 for post list */
+              grid-template-columns: 3fr 1fr;
               gap: 2rem;
               margin-top: 2rem;
             }
 
-            /* Adjust the posts grid layout */
             .posts-grid {
               display: grid;
-              grid-template-columns: repeat(3, 1fr); /* 3 posts per row */
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
               gap: 1.5rem;
             }
 
-            /* Grid Item styling */
             .grid-item {
               border: 1px solid #ddd;
               padding: 1.5rem;
@@ -86,7 +80,7 @@ const CategoryTemplate = ({ data }) => {
             }
 
             .grid-item h3 {
-              font-size: 1.1rem; /* Fixed title size */
+              font-size: 1.1rem;
               margin-bottom: 0.5rem;
               color: #0066cc;
             }
@@ -101,7 +95,7 @@ const CategoryTemplate = ({ data }) => {
             }
 
             .grid-item p {
-              font-size: 0.85rem; /* Adjusted font size for excerpts */
+              font-size: 0.85rem;
               color: #555;
               margin-bottom: 0.5rem;
             }
@@ -111,7 +105,6 @@ const CategoryTemplate = ({ data }) => {
               color: #999;
             }
 
-            /* Adjusting the vertical list for the right side */
             .vertical-list {
               padding: 1.5rem;
               border: 1px solid #ddd;
@@ -154,6 +147,48 @@ const CategoryTemplate = ({ data }) => {
               font-size: 0.85rem;
               color: #999;
             }
+
+            /* Responsive design for tablets */
+            @media (max-width: 1024px) {
+              .grid-container {
+                grid-template-columns: 1fr; /* Single column layout */
+              }
+
+              .vertical-list {
+                margin-top: 2rem; /* Move below posts grid */
+              }
+            }
+
+            /* Responsive design for mobile */
+            @media (max-width: 768px) {
+              .category-page {
+                padding: 1rem;
+              }
+
+              header h1 {
+                font-size: 1.5rem;
+              }
+
+              .grid-item {
+                padding: 1rem;
+              }
+
+              .grid-item img {
+                height: 150px;
+              }
+
+              .vertical-list h2 {
+                font-size: 1.25rem;
+              }
+
+              .vertical-list li a {
+                font-size: 0.9rem;
+              }
+
+              .post-meta {
+                font-size: 0.8rem;
+              }
+            }
           `}
         </style>
 
@@ -163,7 +198,6 @@ const CategoryTemplate = ({ data }) => {
         </header>
 
         <div className="grid-container">
-          {/* Left side - Grid of Posts */}
           <div className="posts-grid">
             {posts?.nodes?.length > 0 ? (
               posts.nodes.map((post) => (
@@ -189,7 +223,6 @@ const CategoryTemplate = ({ data }) => {
             )}
           </div>
 
-          {/* Right side - Post List (Vertical list of posts) */}
           <div className="vertical-list">
             <h2>Posts List</h2>
             <ul>

@@ -41,16 +41,16 @@ const PostTemplate = ({ data }) => {
             }
 
             header h1 {
-              font-size: 2.5rem;
-              color: black; /* Title in black */
+              font-size: 2rem;
+              color: black;
               margin-bottom: 0.5rem;
-              text-align: left; /* Align title to the left */
+              text-align: left;
             }
 
             header p {
               font-size: 1rem;
               color: #555;
-              text-align: left; /* Align text to the left */
+              text-align: left;
               margin-bottom: 0.5rem;
             }
 
@@ -63,6 +63,7 @@ const PostTemplate = ({ data }) => {
               padding: 0;
               display: inline-flex;
               gap: 0.75rem;
+              flex-wrap: wrap; /* Allow categories to wrap on smaller screens */
             }
 
             header li {
@@ -72,7 +73,6 @@ const PostTemplate = ({ data }) => {
             header a {
               text-decoration: none;
               color: #0066cc;
-           
               transition: color 0.3s ease;
             }
 
@@ -125,22 +125,66 @@ const PostTemplate = ({ data }) => {
               color: #004999;
               text-decoration: underline;
             }
+
+            /* Responsive design for tablets */
+            @media (max-width: 1024px) {
+              .post-page {
+                padding: 1rem;
+              }
+
+              header h1 {
+                font-size: 1.75rem;
+              }
+
+              section {
+                font-size: 1rem;
+              }
+
+              footer p {
+                font-size: 0.9rem;
+              }
+            }
+
+            /* Responsive design for mobile */
+            @media (max-width: 768px) {
+              .post-page {
+                padding: 0.75rem;
+              }
+
+              header h1 {
+                font-size: 1.5rem;
+                text-align: center; /* Center align title on mobile */
+              }
+
+              header p {
+                text-align: center; /* Center align meta info on mobile */
+                font-size: 0.9rem;
+              }
+
+              header div {
+                text-align: center; /* Center align categories on mobile */
+              }
+
+              header ul {
+                justify-content: center; /* Center align categories in flexbox */
+              }
+
+              section {
+                font-size: 0.95rem;
+              }
+
+              footer p {
+                font-size: 0.85rem;
+              }
+            }
           `}
         </style>
 
         <header>
           <h1>{title}</h1>
-          {/* Display time since posted */}
           <p>{getTimeAgo(date)}</p>
-
-          {/* Display the author's name */}
-          <p className="author-name">
-          {author?.node?.name || "Unknown"}
-          </p>
-
-          {/* Categories display */}
+          <p className="author-name">{author?.node?.name || "Unknown"}</p>
           <div className="category-links">
-            
             {categories?.nodes?.length > 0 ? (
               <ul>
                 {categories.nodes.map((category) => (
@@ -152,7 +196,7 @@ const PostTemplate = ({ data }) => {
                 ))}
               </ul>
             ) : (
-              <span> None </span>
+              <span>None</span>
             )}
           </div>
         </header>
