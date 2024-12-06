@@ -13,17 +13,15 @@
   left: 0;
   width: 100%;
   z-index: 10;
-  padding: 0.5rem 1rem;
 }
 
 .logo-container {
-  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: bold;
   color: #000;
   text-align: center;
   position: relative; /* Ensure absolute positioning for the buttons */
-  padding: 0 20px;
+  padding: 10px 20px 10px 20px;
 }
 
 /* Position the left and right buttons */
@@ -98,6 +96,7 @@
 }
 
 
+/* Submenu Styles */
 .horizontal-line {
   border-top: 1px solid #ddd;
   width: 100%;
@@ -132,13 +131,13 @@
   color: red;
 }
 
-/* Side menu styles */
+/* Side menu styles (for desktop and mobile) */
 .side-menu {
   position: fixed;
   left: 0;
   top: 0;
   height: 100%;
-  width: 25%;
+  width: 25%; /* Default width for desktop */
   background-color: #fff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
@@ -175,7 +174,7 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
-  z-index: 10;
+  z-index: 10; /* Ensure it is below the logo container */
 }
 
 .menu-overlay.open {
@@ -189,33 +188,33 @@
   .nav-list {
       display: none;
   }
-  
+
   .submenu-container {
       display: none;
   }
-  
+
   /* Adjust the logo and buttons for smaller screens */
   .logo-container {
       font-size: 1.25rem;
   }
-  
-  /* Make the header more compact on mobile */
-  .header {
-      padding: 0.5rem;
-  }
-  
+
   .logo-container button {
       font-size: 1.25rem;
   }
 
   /* Side menu styles for mobile */
   .side-menu {
-      width: 75%;
+      width: 100%; /* Full width for mobile */
       padding: 15px;
   }
 
   .side-menu .category-item {
       padding: 0.8rem;
+  }
+
+  /* Ensure the menu overlay takes over the screen */
+  .menu-overlay.open {
+    z-index: 15; /* Ensure the overlay is above other content */
   }
 }
 

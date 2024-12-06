@@ -56,7 +56,6 @@ header li {
 @media screen and (max-width: 768px) {
   .layout {
     flex-direction: column;
-    padding: 10px;
   }
 
   .header .logo {

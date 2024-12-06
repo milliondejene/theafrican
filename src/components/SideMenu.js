@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
+import { MdSearch } from 'react-icons/md'; // Import search icon
 import useCategories from "../hooks/useCategories";
 import useActiveCategory from "../hooks/useActiveCategory";
 
@@ -15,6 +16,14 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
 
   // State to track which category has its subcategories open
   const [openCategory, setOpenCategory] = useState(null);
+
+  // State for search input
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtered categories based on search term
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Toggle the subcategory dropdown for the clicked category
   const handleCategoryToggle = (categorySlug, event) => {
@@ -43,7 +52,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
         transition: "transform 0.3s ease",
         width: "250px",
         position: "fixed",
-        top: "50px",
+        top: "60px",
         bottom: "0",
         left: "0",
         backgroundColor: "#fff",
@@ -52,7 +61,34 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
         paddingTop: "20px",
       }}
     >
-      {categories.map((category) => (
+      {/* Search Input */}
+      <div
+        className="search-container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          padding: "10px",
+          borderBottom: "1px solid #ddd",
+        }}
+      >
+        
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search categories..."
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "4px",
+            padding: "8px",
+            width: "100%",
+            fontSize: "14px",
+          }}
+        />
+        <MdSearch size={20} color="#333" style={{ marginLeft: "10px" }} />
+      </div>
+
+      {filteredCategories.map((category) => (
         <div key={category.id}>
           {/* Parent category */}
           <div
