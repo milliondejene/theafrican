@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { navigate } from "gatsby";
+import { navigate, Link } from "gatsby";
 import { useLocation } from "@reach/router";
 import useCategories from "../../hooks/useCategories"; // Custom hook for fetching categories and filtering subcategories
 import useScroll from "../../hooks/useScroll"; // Custom hook for scroll logic
@@ -45,7 +45,22 @@ const Header = () => {
         <button onClick={toggleMenu} className="menu-icon">
           {isMenuOpen ? "×" : "☰"} {/* Change icon when the menu is open */}
         </button>
-        TheAfrican
+        <Link 
+  to="/" 
+  className="brand-link" 
+  style={{
+    textDecoration: 'none', // Removes the underline
+    fontSize: '1.2rem', // Adjust the font size for the brand
+    fontWeight: 'bold', // Make the brand name bold
+    color: '#333', // Set the brand color to dark grey
+    letterSpacing: '1px', // Optional: Adjust letter spacing for a clean look
+    textTransform: 'uppercase', // Optional: Make the brand name uppercase
+    transition: 'color 0.3s ease', // Smooth transition for hover color change
+  }}
+>
+  TheAfrican
+</Link>
+
         {/* Right button - toggles between 'o.' and search icon */}
         <button className="search-icon">
         <MdSearch size={30} color="#333" />

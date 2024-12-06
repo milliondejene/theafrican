@@ -32,6 +32,9 @@ main {
   color: #fff;
   text-decoration: none;
 }
+header li {
+  display: inline-block;
+}
 
 .nav-list {
   list-style: none;
@@ -45,6 +48,7 @@ main {
   color: #fff;
   text-decoration: none;
 }
+
 
 /* Mobile responsiveness */
 

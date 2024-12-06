@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from "gatsby"
 const Footer = () => {
   return (
     <footer className="footer">
@@ -51,7 +51,22 @@ const Footer = () => {
         `}
       </style>
 
-      <div className="branding">TheAfrican</div>
+      <div className="branding">        
+      <Link 
+  to="/" 
+  className="brand-link" 
+  style={{
+    textDecoration: 'none', // Removes the underline
+    fontSize: '1.2rem', // Adjust the font size for the brand
+    fontWeight: 'bold', // Make the brand name bold
+    color: '#333', // Set the brand color to dark grey
+    letterSpacing: '1px', // Optional: Adjust letter spacing for a clean look
+    textTransform: 'uppercase', // Optional: Make the brand name uppercase
+    transition: 'color 0.3s ease', // Smooth transition for hover color change
+  }}
+>
+  TheAfrican
+</Link></div>
 
       <div className="footer-bottom">
         <div className="copyright">

@@ -40,6 +40,9 @@ const SubcategoryTemplate = ({ data }) => {
               text-align: center;
               margin-top: 0.5rem;
             }
+              header li {
+  display: inline-block;
+}
 
             header a:hover {
               text-decoration: underline;
@@ -52,7 +55,7 @@ const SubcategoryTemplate = ({ data }) => {
 
             .grid-container {
               display: grid;
-              grid-template-columns: 3fr 1fr; /* Left for posts grid, right for post list */
+              grid-template-columns: 3fr 1fr;
               gap: 1.5rem;
               margin-top: 2rem;
             }
@@ -165,6 +168,10 @@ const SubcategoryTemplate = ({ data }) => {
 
               .vertical-list {
                 margin-top: 2rem; /* Move below posts grid */
+              }
+
+              header h1 {
+                font-size: 1.75rem;
               }
             }
 
