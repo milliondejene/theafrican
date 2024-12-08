@@ -40,10 +40,6 @@ header h1 {
   text-align: left;
 }
 
-.separator {
-  margin-bottom: 1rem;
-}
-
 header div {
   text-align: left;
 }
@@ -87,12 +83,8 @@ header a:hover {
 
 /* Grid items */
 .grid-item {
-  border: 1px solid #ddd;
-  padding: 1.5rem;
-  border-radius: 8px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left;
   font-size: 0.9rem;
   min-width: 250px;
   max-width: 300px;
@@ -103,7 +95,7 @@ header a:hover {
 
 .grid-item img {
   max-width: 100%;
-  border-radius: 4px;
+  border-radius: 1px;
   margin-bottom: 0.5rem;
   height: 180px;
   object-fit: cover;
@@ -112,11 +104,13 @@ header a:hover {
 .grid-item h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color: #0066cc;
+  color: black;
+  text-align: left;
 }
 
 .grid-item h3 a {
   text-decoration: none;
+  color: black;
 }
 
 .grid-item h3 a:hover {
@@ -128,28 +122,28 @@ header a:hover {
   font-size: 0.85rem;
   color: #555;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .post-meta {
   font-size: 0.85rem;
   color: #999;
+  text-align: left;
 }
 
 /* List of posts */
 .vertical-list {
-  padding: 1.5rem;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   grid-column: span 1;
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .vertical-list h2 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
+  text-align: left;
 }
 
 .vertical-list ul {
@@ -164,9 +158,10 @@ header a:hover {
 
 .vertical-list li a {
   text-decoration: none;
-  color: #0066cc;
+  color: black;
   font-size: 1rem;
   transition: color 0.3s ease;
+  color:black;
 }
 
 .vertical-list li a:hover {
@@ -205,10 +200,6 @@ header a:hover {
     justify-content: center;
   }
 
-  .grid-item {
-    padding: 1rem;
-  }
-
   .grid-item img {
     height: 150px;
   }
@@ -223,6 +214,7 @@ header a:hover {
 
   .post-meta {
     font-size: 0.8rem;
+    margin-top:2px;
   }
 }
 
@@ -248,10 +240,14 @@ header a:hover {
                   <h3>
                     <Link to={`/post/${post.slug}`}>{post.title}</Link>
                   </h3>
-                  <p>{truncateText(post.excerpt, 100)}</p>
+                  <div
+    dangerouslySetInnerHTML={{
+      __html: truncateText(post.excerpt, 100),
+    }}
+  />
                   <div className="post-meta">
-                    {post.categories?.nodes?.map((cat) => cat.name).join(", ")} |{" "}
-                    {getTimeAgo(post.date)}
+                    {getTimeAgo(post.date)} |{" "}
+                    {post.categories?.nodes?.map((cat) => cat.name).join(", ")}
                   </div>
                 </div>
               ))
@@ -268,8 +264,8 @@ header a:hover {
                   <li key={post.id}>
                     <Link to={`/post/${post.slug}`}>{post.title}</Link>
                     <div className="post-meta">
-                      {post.categories?.nodes?.map((cat) => cat.name).join(", ")} |{" "}
-                      {getTimeAgo(post.date)}
+                      {post.categories?.nodes?.map((cat) => cat.name).join(", ")}{" "}
+                      | {getTimeAgo(post.date)}
                     </div>
                   </li>
                 ))

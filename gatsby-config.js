@@ -26,7 +26,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-wordpress',
       options: {
-        url: 'http://wp.theafrican.co/graphql',  // Replace with your WordPress GraphQL endpoint
+        url: 'https://wp.theafrican.co/graphql',  // Replace with your WordPress GraphQL endpoint
         verbose: true,
         develop: {
           hardCacheMediaFiles: false,

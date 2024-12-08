@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 
 const Navigation = ({ categories, activeCategory, handleCategoryClick, activeSubcategories, handleSubcategoryClick }) => {
   return (
-<nav style={{ marginTop: "1rem" }}>
+<nav>
   <div className="scrollable-container">
     <ul className="nav-list">
       {categories.map((category) => (
@@ -38,7 +38,6 @@ const Navigation = ({ categories, activeCategory, handleCategoryClick, activeSub
   )}
   <hr className="separator" />
 </nav>
-
   );
 };
 

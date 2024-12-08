@@ -6,6 +6,23 @@ import { formatDistanceToNow } from "date-fns";
 const SubcategoryTemplate = ({ data }) => {
   const { name, posts, parent } = data.wpCategory;
 
+  const getTimeAgo = (dateString) => {
+    const postDate = new Date(dateString);
+    const currentDate = new Date();
+    const timeDiff = Math.floor((currentDate - postDate) / (1000 * 60 * 60 * 24)); // Difference in days
+
+    if (timeDiff === 0) return "Today";
+    if (timeDiff === 1) return "1 day ago";
+    return `${timeDiff} days ago`;
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.substring(0, maxLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <Layout>
       <div className="subcategory-template">
@@ -40,19 +57,13 @@ const SubcategoryTemplate = ({ data }) => {
               text-align: center;
               margin-top: 0.5rem;
             }
-              header li {
-  display: inline-block;
-}
+            header li {
+              display: inline-block;
+            }
 
             header a:hover {
               text-decoration: underline;
             }
-
-            .separator {
-              border-bottom: 1px solid #ddd;
-              margin: 1rem 0;
-            }
-
             .grid-container {
               display: grid;
               grid-template-columns: 3fr 1fr;
@@ -67,10 +78,7 @@ const SubcategoryTemplate = ({ data }) => {
             }
 
             .grid-item {
-              border: 1px solid #ddd;
-              border-radius: 8px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-              padding: 1rem;
+              border-radius: 1px;
               background-color: #fff;
               transition: transform 0.2s ease;
               display: flex;
@@ -98,6 +106,7 @@ const SubcategoryTemplate = ({ data }) => {
 
             .grid-item h3 a {
               text-decoration: none;
+               color: black;
             }
 
             .grid-item h3 a:hover {
@@ -111,11 +120,6 @@ const SubcategoryTemplate = ({ data }) => {
             }
 
             .vertical-list {
-              padding: 1rem;
-              border: 1px solid #ddd;
-              border-radius: 8px;
-              background-color: #f9f9f9;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
               display: flex;
               flex-direction: column;
             }
@@ -123,7 +127,7 @@ const SubcategoryTemplate = ({ data }) => {
             .vertical-list h2 {
               font-size: 1.5rem;
               margin-bottom: 1rem;
-              text-align: center;
+              text-align: left;
             }
 
             .vertical-list ul {
@@ -138,7 +142,7 @@ const SubcategoryTemplate = ({ data }) => {
 
             .vertical-list li a {
               text-decoration: none;
-              color: #0066cc;
+              color: black;
               font-size: 1rem;
               transition: color 0.3s ease;
             }
@@ -166,10 +170,6 @@ const SubcategoryTemplate = ({ data }) => {
                 grid-template-columns: 1fr; /* Single column layout */
               }
 
-              .vertical-list {
-                margin-top: 2rem; /* Move below posts grid */
-              }
-
               header h1 {
                 font-size: 1.75rem;
               }
@@ -187,10 +187,6 @@ const SubcategoryTemplate = ({ data }) => {
 
               header a {
                 font-size: 0.9rem;
-              }
-
-              .grid-item {
-                padding: 1rem;
               }
 
               .grid-item img {
@@ -242,8 +238,14 @@ const SubcategoryTemplate = ({ data }) => {
                   <h3>
                     <Link to={`/post/${post.slug}`}>{post.title}</Link>
                   </h3>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: truncateText(post.excerpt, 100),
+                    }}
+                  />
                   <div className="post-meta">
-                    {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
+                    {getTimeAgo(post.date)} |{" "}
+                    {post.categories?.nodes?.map((cat) => cat.name).join(", ")}
                   </div>
                 </div>
               ))}
@@ -257,7 +259,7 @@ const SubcategoryTemplate = ({ data }) => {
                     <Link to={`/post/${post.slug}`}>{post.title}</Link>
                     <div className="post-meta">
                       {post.categories?.nodes[0]?.name || "Uncategorized"} •{" "}
-                      {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
+                      {getTimeAgo(post.date)}
                     </div>
                   </li>
                 ))}
@@ -290,6 +292,7 @@ export const query = graphql`
           id
           title
           slug
+          excerpt
           date
           featuredImage {
             node {
