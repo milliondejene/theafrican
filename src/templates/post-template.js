@@ -3,27 +3,8 @@ import { graphql, Link, navigate } from "gatsby" // Import navigate for redirect
 import { FaShareAlt } from 'react-icons/fa';  // Import the share icon
 import { FaBookmark } from 'react-icons/fa';  // Import the bookmark icon
 import Layout from "../components/layout/Layout"
-
+import { getTimeAgo } from "../utils/timeAgo"; 
 // Helper function to calculate relative time
-const getTimeAgo = dateString => {
-  const postDate = new Date(dateString)
-  const currentDate = new Date()
-  const timeDiff = Math.floor((currentDate - postDate) / (1000 * 60 * 60)) // Difference in hours
-
-  if (timeDiff < 1) {
-    return "Less than an hour ago"
-  } else if (timeDiff === 1) {
-    return "1 hour ago"
-  } else if (timeDiff < 24) {
-    return `${timeDiff} hours ago`
-  } else {
-    const daysDiff = Math.floor(timeDiff / 24)
-    if (daysDiff === 1) {
-      return "1 day ago"
-    }
-    return `${daysDiff} days ago`
-  }
-}
 
 const PostTemplate = ({ data }) => {
   const { title, content, date, author, categories } = data.wpPost

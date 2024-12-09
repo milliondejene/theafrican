@@ -1,20 +1,10 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/layout/Layout";
-import { formatDistanceToNow } from "date-fns";
+import { getTimeAgo } from "../utils/timeAgo"; // Import the utility function
 
 const SubcategoryTemplate = ({ data }) => {
   const { name, posts, parent } = data.wpCategory;
-
-  const getTimeAgo = (dateString) => {
-    const postDate = new Date(dateString);
-    const currentDate = new Date();
-    const timeDiff = Math.floor((currentDate - postDate) / (1000 * 60 * 60 * 24)); // Difference in days
-
-    if (timeDiff === 0) return "Today";
-    if (timeDiff === 1) return "1 day ago";
-    return `${timeDiff} days ago`;
-  };
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -78,6 +68,8 @@ const SubcategoryTemplate = ({ data }) => {
             }
 
             .grid-item {
+            text-decoration: none;
+            color: black;.grid-item h3 
               border-radius: 1px;
               background-color: #fff;
               transition: transform 0.2s ease;
@@ -94,13 +86,13 @@ const SubcategoryTemplate = ({ data }) => {
               width: 100%;
               height: 180px;
               object-fit: cover;
-              border-radius: 4px;
+              border-radius: 2px;
               margin-bottom: 0.5rem;
             }
 
             .grid-item h3 {
               font-size: 1.25rem;
-              color: #0066cc;
+              color: black;
               margin-bottom: 0.5rem;
             }
 
@@ -162,6 +154,19 @@ const SubcategoryTemplate = ({ data }) => {
               color: #666;
               margin-top: 2rem;
               text-align: center;
+            }
+
+            /* Prevent link styles from affecting content */
+            .grid-item a {
+              color: inherit;
+              text-decoration: none;
+              display: block;
+              height: 100%;
+            }
+
+            .grid-item a:hover {
+              text-decoration: none;
+              color: inherit;
             }
 
             /* Responsive design for tablets */
@@ -228,16 +233,14 @@ const SubcategoryTemplate = ({ data }) => {
           <div className="grid-container">
             <div className="posts-grid">
               {posts.nodes.map((post) => (
-                <div className="grid-item" key={post.id}>
+                <Link to={`/post/${post.slug}`} className="grid-item" key={post.id}>
                   {post.featuredImage?.node?.sourceUrl && (
                     <img
                       src={post.featuredImage.node.sourceUrl}
                       alt={post.title}
                     />
                   )}
-                  <h3>
-                    <Link to={`/post/${post.slug}`}>{post.title}</Link>
-                  </h3>
+                  <h3>{post.title}</h3>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: truncateText(post.excerpt, 100),
@@ -247,7 +250,7 @@ const SubcategoryTemplate = ({ data }) => {
                     {getTimeAgo(post.date)} |{" "}
                     {post.categories?.nodes?.map((cat) => cat.name).join(", ")}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
