@@ -19,7 +19,6 @@ const SubcategoryTemplate = ({ data }) => {
         <style>
           {`
             .subcategory-template {
-              padding: 2rem;
               font-family: Arial, sans-serif;
               color: #333;
             }
@@ -183,7 +182,6 @@ const SubcategoryTemplate = ({ data }) => {
             /* Responsive design for mobile */
             @media (max-width: 768px) {
               .subcategory-template {
-                padding: 1rem;
               }
 
               header h1 {
