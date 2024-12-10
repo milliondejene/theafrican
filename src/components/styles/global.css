@@ -36,13 +36,32 @@ header li {
   display: inline-block;
 }
 
+/* Scrollable Container for Navigation */
+/* Scrollable Container for Navigation */
 .nav-list {
   list-style: none;
-  display: flex;
-  gap: 15px;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center; /* Center categories by default */
+  gap: 1rem;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  white-space: nowrap; /* Prevent wrapping of items */
 }
+
+.nav-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+@media (max-width: 768px) {
+  .nav-list {
+    justify-content: flex-start; /* Align to the start for easier scrolling on mobile */
+    padding: 0 1rem; /* Add some padding for better mobile experience */
+  }
+}
+
 
 .nav-list li a {
   color: #fff;
@@ -64,10 +83,30 @@ header li {
     margin-bottom: 10px;
   }
 
+ /* Scrollable Container for Navigation */
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center categories by default */
+  gap: 1rem;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  white-space: nowrap; /* Prevent wrapping of items */
+}
+
+.nav-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+@media (max-width: 768px) {
   .nav-list {
-    display: block;  /* Stack nav items vertically */
-    text-align: center;
+    justify-content: flex-start; /* Align to the start for easier scrolling on mobile */
+    padding: 0 1rem; /* Add some padding for better mobile experience */
   }
+}
 
   .nav-list li {
     margin-bottom: 10px;  /* Add spacing between items */

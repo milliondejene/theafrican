@@ -56,6 +56,7 @@ const PostTemplate = ({ data }) => {
        margin-top: 0.5rem;
   }
 
+
   /* Share and Save icon styles */
   .action-links {
     display: flex;
@@ -113,6 +114,7 @@ const PostTemplate = ({ data }) => {
   .category-links span a {
     margin-right: 0.5rem;
   }
+    
 
   /* Responsive design for tablets */
   @media (max-width: 1024px) {
@@ -136,6 +138,9 @@ const PostTemplate = ({ data }) => {
       font-size: 1rem;
     }
   }
+    hr.separator {
+  margin-bottom: 0; /* Removes the bottom margin */
+}
 
   /* Responsive design for mobile */
   @media (max-width: 768px) {

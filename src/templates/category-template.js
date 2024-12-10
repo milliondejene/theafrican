@@ -19,7 +19,7 @@ const CategoryTemplate = ({ data }) => {
         <style>
           {`
           .category-page {
-            padding: 2rem;
+         
             font-family: Arial, sans-serif;
             color: #333;
           }
@@ -112,7 +112,9 @@ const CategoryTemplate = ({ data }) => {
           .vertical-list li a:hover {
             color: #004999;
           }
-
+hr.separator {
+  margin-bottom: 0; /* Removes the bottom margin */
+}
           @media (max-width: 1024px) {
             .grid-container {
               grid-template-columns: 1fr;
@@ -121,8 +123,11 @@ const CategoryTemplate = ({ data }) => {
 
           @media (max-width: 768px) {
             .category-page {
-              padding: 1rem;
+           
             }
+            hr.separator {
+  margin-bottom: 0; /* Removes the bottom margin */
+}
 
             header h1 {
               font-size: 1.5rem;
@@ -134,7 +139,7 @@ const CategoryTemplate = ({ data }) => {
 
         <header>
           <h1>{name}</h1>
-          <hr className="separator" style={{ borderTop: '2px solid black', margin: '10px 0' }} />
+          <hr className="separator" style={{ borderTop: 'solid black'}} />
         </header>
 
         <div className="grid-container">

@@ -44,7 +44,7 @@ const SubcategoryTemplate = ({ data }) => {
               text-decoration: none;
               display: block;
               text-align: center;
-              margin-top: 0.5rem;
+           
             }
             header li {
               display: inline-block;
@@ -167,6 +167,9 @@ const SubcategoryTemplate = ({ data }) => {
               text-decoration: none;
               color: inherit;
             }
+              hr.separator {
+  margin-bottom: 0; /* Removes the bottom margin */
+}
 
             /* Responsive design for tablets */
             @media (max-width: 1024px) {
@@ -187,7 +190,9 @@ const SubcategoryTemplate = ({ data }) => {
               header h1 {
                 font-size: 1.5rem;
               }
-
+hr.separator {
+  margin-bottom: 0; /* Removes the bottom margin */
+}
               header a {
                 font-size: 0.9rem;
               }
@@ -223,7 +228,7 @@ const SubcategoryTemplate = ({ data }) => {
             )}
           </h1>
           {parent && <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>}
-          <hr className="separator" style={{ borderTop: '2px solid black', margin: '10px 0' }} />
+          <hr className="separator" style={{ borderTop: ' solid black',}} />
         </header>
 
         <div className="separator"></div>

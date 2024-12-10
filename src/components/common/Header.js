@@ -50,7 +50,7 @@ const Header = () => {
             {isMenuOpen ? "×" : "☰"}
           </button>
           <button className="search-icon">
-            <MdSearch size={30} color="#333" />
+            <MdSearch size={25} color="#333" />
           </button>
         </div>
 
