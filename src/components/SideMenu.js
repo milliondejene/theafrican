@@ -25,7 +25,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Toggle the subcategory dropdown for the clicked category
+  // Toggle the subcategory dropdown for the clickedcategory
   const handleCategoryToggle = (categorySlug, event) => {
     event.preventDefault(); // Prevent navigation when clicking the category name
     setOpenCategory((prevState) =>
