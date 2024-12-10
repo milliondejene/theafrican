@@ -134,6 +134,7 @@ const CategoryTemplate = ({ data }) => {
 
         <header>
           <h1>{name}</h1>
+          <hr className="separator" style={{ borderTop: '2px solid black', margin: '10px 0' }} />
         </header>
 
         <div className="grid-container">

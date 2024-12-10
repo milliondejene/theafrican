@@ -27,7 +27,7 @@ const SubcategoryTemplate = ({ data }) => {
             header h1 {
               font-size: 2rem;
               margin: 0 0 1rem;
-              text-align: center;
+              text-align: first;
             }
 
             header h1 span.parent {
@@ -218,13 +218,14 @@ const SubcategoryTemplate = ({ data }) => {
             {parent ? (
               <>
                 <span className="parent">{parent.name}</span>:{" "}
-                <span className="subcategory">{name} Page</span>
+                <span className="subcategory">{name}</span>
               </>
             ) : (
-              <span className="subcategory">{name} Page</span>
+              <span className="subcategory">{name}</span>
             )}
           </h1>
           {parent && <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>}
+          <hr className="separator" style={{ borderTop: '2px solid black', margin: '10px 0' }} />
         </header>
 
         <div className="separator"></div>
