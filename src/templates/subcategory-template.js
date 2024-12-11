@@ -21,6 +21,7 @@ const SubcategoryTemplate = ({ data }) => {
             .subcategory-template {
               font-family: Arial, sans-serif;
               color: #333;
+               padding:2rem;
             }
 
             header h1 {

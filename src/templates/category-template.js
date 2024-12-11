@@ -22,6 +22,7 @@ const CategoryTemplate = ({ data }) => {
          
             font-family: Arial, sans-serif;
             color: #333;
+            padding: 2rem;
           }
 
           header h1 {
@@ -50,7 +51,6 @@ const CategoryTemplate = ({ data }) => {
             text-align: left;
             font-size: 0.9rem;
             min-width: 250px;
-            max-width: 300px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
