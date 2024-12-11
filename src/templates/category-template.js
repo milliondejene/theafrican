@@ -168,6 +168,7 @@ hr.separator {
                     {getTimeAgo(post.date)} |{" "}
                     {post.categories?.nodes?.map((cat) => cat.name).join(", ")}
                   </div>
+                  <hr className="separator" />
                 </Link>
               ))
             ) : (

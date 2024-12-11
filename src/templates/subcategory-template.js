@@ -1,17 +1,17 @@
-import React from "react";
-import { graphql, Link } from "gatsby";
-import Layout from "../components/layout/Layout";
-import { getTimeAgo } from "../utils/timeAgo"; // Import the utility function
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/layout/Layout"
+import { getTimeAgo } from "../utils/timeAgo" // Import the utility function
 
 const SubcategoryTemplate = ({ data }) => {
-  const { name, posts, parent } = data.wpCategory;
+  const { name, posts, parent } = data.wpCategory
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
-      return `${text.substring(0, maxLength)}...`;
+      return `${text.substring(0, maxLength)}...`
     }
-    return text;
-  };
+    return text
+  }
 
   return (
     <Layout>
@@ -228,7 +228,7 @@ hr.separator {
             )}
           </h1>
           {parent && <Link to={`/${parent.slug}`}>Back to {parent.name}</Link>}
-          <hr className="separator" style={{ borderTop: ' solid black',}} />
+          <hr className="separator" style={{ borderTop: " solid black" }} />
         </header>
 
         <div className="separator"></div>
@@ -236,8 +236,12 @@ hr.separator {
         {posts?.nodes?.length > 0 ? (
           <div className="grid-container">
             <div className="posts-grid">
-              {posts.nodes.map((post) => (
-                <Link to={`/post/${post.slug}`} className="grid-item" key={post.id}>
+              {posts.nodes.map(post => (
+                <Link
+                  to={`/post/${post.slug}`}
+                  className="grid-item"
+                  key={post.id}
+                >
                   {post.featuredImage?.node?.sourceUrl && (
                     <img
                       src={post.featuredImage.node.sourceUrl}
@@ -252,8 +256,9 @@ hr.separator {
                   />
                   <div className="post-meta">
                     {getTimeAgo(post.date)} |{" "}
-                    {post.categories?.nodes?.map((cat) => cat.name).join(", ")}
+                    {post.categories?.nodes?.map(cat => cat.name).join(", ")}
                   </div>
+                  <hr className="separator" />
                 </Link>
               ))}
             </div>
@@ -261,7 +266,7 @@ hr.separator {
             <div className="vertical-list">
               <h2>Posts List</h2>
               <ul>
-                {posts.nodes.map((post) => (
+                {posts.nodes.map(post => (
                   <li key={post.id}>
                     <Link to={`/post/${post.slug}`}>{post.title}</Link>
                     <div className="post-meta">
@@ -274,12 +279,14 @@ hr.separator {
             </div>
           </div>
         ) : (
-          <div className="no-posts">No posts available in this subcategory.</div>
+          <div className="no-posts">
+            No posts available in this subcategory.
+          </div>
         )}
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query GetSubcategoryData($slug: String!) {
@@ -315,6 +322,6 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
-export default SubcategoryTemplate;
+export default SubcategoryTemplate

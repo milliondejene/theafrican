@@ -168,11 +168,25 @@ li *:last-child {
   margin-bottom: 0;
 }
 p *:last-child {
-  margin-bottom: 0;
+  margin-bottom: 2px;
 }
 
 p {
-  max-width: 680px;
+   /* Spacing */
+   margin: 16px 0; /* Add vertical spacing between paragraphs */
+   padding: 0; /* Remove any padding inside paragraphs */
+   
+   /* Typography */
+   font-family: 'Georgia', serif; /* Elegant serif font for magazine text */
+   line-height: 1.2; 
+   font-size: 1.2rem; 
+   color: #333333; 
+   text-align: justify; 
+   
+   /* Optional aesthetics */
+  
+   word-spacing: 0.03em; 
+   letter-spacing: 0.01em;  
 }
 code {
   font-size: 0.875rem;
