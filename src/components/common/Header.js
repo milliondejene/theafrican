@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { navigate, Link } from "gatsby";
 import { useLocation } from "@reach/router";
-import useCategories from "../../hooks/useCategories"; // Custom hook for fetching categories and filtering subcategories
-import useScroll from "../../hooks/useScroll"; // Custom hook for scroll logic
-import useActiveCategory from "../../hooks/useActiveCategory"; // Custom hook for active category and subcategory
-import SideMenu from "../SideMenu"; // Import the SideMenu component
-import Navigation from "./Navigation"; // Import the Navigation component
-import "./Header.css";
+import useCategories from "../../hooks/useCategories";
+import useScroll from "../../hooks/useScroll";
+import useActiveCategory from "../../hooks/useActiveCategory";
+import SideMenu from "../SideMenu";
+import Navigation from "./Navigation";
 import { MdSearch } from "react-icons/md";
+import "./Header.css";
+
 const Header = () => {
   const location = useLocation();
   const { categories, getSubcategories } = useCategories();
@@ -20,6 +21,9 @@ const Header = () => {
   } = useActiveCategory(location);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Ref to trigger focus on search input
+  const searchInputRef = useRef(null);
 
   const handleCategoryClick = (categorySlug) => {
     setActiveCategory(categorySlug);
@@ -38,23 +42,30 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Fetch subcategories for the active category
+  const handleSearchClick = () => {
+    setIsMenuOpen(true);
+    // Focus on the search input when the menu opens
+    setTimeout(() => {
+      if (searchInputRef.current) {
+        searchInputRef.current.focus();
+      }
+    }, 300); // Add a slight delay to ensure the menu is fully open
+  };
+
   const activeSubcategories = getSubcategories(activeCategory);
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="logo-container">
-        {/* Left corner: Side menu and search icons */}
         <div className="left-icons">
           <button onClick={toggleMenu} className="menu-icon">
-            {isMenuOpen ? "×" : "☰"}
+            {isMenuOpen ? "X" : "☰"}
           </button>
-          <button className="search-icon">
+          <button onClick={handleSearchClick} className="search-icon">
             <MdSearch size={25} color="#333" />
           </button>
         </div>
 
-        {/* Center: Brand Link with conditional styling */}
         <Link
           to="/"
           className={`brand-link ${isMenuOpen ? "brand-link-active" : ""}`}
@@ -62,7 +73,6 @@ const Header = () => {
           TheAfrican
         </Link>
 
-        {/* Right corner: Sign In and Register buttons */}
         <div className="right-buttons">
           <button className="register-button">Register</button>
           <button className="signin-button">Sign In</button>
@@ -88,9 +98,9 @@ const Header = () => {
         handleSubcategoryClick={handleSubcategoryClick}
         isMenuOpen={isMenuOpen}
         toggleMenu={toggleMenu}
+        searchInputRef={searchInputRef} // Pass the ref to SideMenu
       />
 
-      {/* Dimmed overlay for the background */}
       <div
         className={`menu-overlay ${isMenuOpen ? "open" : ""}`}
         style={{
@@ -103,6 +113,5 @@ const Header = () => {
     </header>
   );
 };
-
 
 export default Header;

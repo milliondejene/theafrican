@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
-import { MdSearch } from 'react-icons/md'; // Import search icon
+import { MdSearch } from "react-icons/md";
 import useCategories from "../hooks/useCategories";
 import useActiveCategory from "../hooks/useActiveCategory";
 
-const SideMenu = ({ isMenuOpen, toggleMenu }) => {
-  // Fetch categories and subcategories using custom hooks
+const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
   const { categories, getSubcategories } = useCategories();
   const {
     activeCategory,
@@ -14,30 +13,24 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
     setActiveSubcategory,
   } = useActiveCategory();
 
-  // State to track which category has its subcategories open
   const [openCategory, setOpenCategory] = useState(null);
-
-  // State for search input
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtered categories based on search term
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Toggle the subcategory dropdown for the clickedcategory
   const handleCategoryToggle = (categorySlug, event) => {
-    event.preventDefault(); // Prevent navigation when clicking the category name
+    event.preventDefault();
     setOpenCategory((prevState) =>
       prevState === categorySlug ? null : categorySlug
     );
   };
 
-  // Handle navigation to a category or subcategory
   const handleCategoryClick = (categorySlug) => {
     setActiveCategory(categorySlug);
     setOpenCategory(categorySlug);
-    setActiveSubcategory(null); // Reset subcategory when navigating to a new category
+    setActiveSubcategory(null);
   };
 
   const handleSubcategoryClick = (subcategorySlug) => {
@@ -50,7 +43,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
       style={{
         transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
         transition: "transform 0.3s ease",
-        width: "250px",
+        width: "375px",
         position: "fixed",
         top: "60px",
         bottom: "0",
@@ -61,7 +54,6 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
         paddingTop: "20px",
       }}
     >
-      {/* Search Input */}
       <div
         className="search-container"
         style={{
@@ -71,9 +63,9 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
           borderBottom: "1px solid #ddd",
         }}
       >
-        
         <input
           type="text"
+          ref={searchInputRef} // Attach the ref here
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search categories..."
@@ -85,12 +77,13 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
             fontSize: "14px",
           }}
         />
-        <MdSearch size={20} color="#333" style={{ marginLeft: "10px" }} />
+         <button className="search-icon">
+        <MdSearch size={30} color="#333" style={{ marginLeft: "10px" }} />
+        </button>
       </div>
 
       {filteredCategories.map((category) => (
         <div key={category.id}>
-          {/* Parent category */}
           <div
             className="category-item"
             onClick={(event) => handleCategoryToggle(category.slug, event)}
@@ -105,10 +98,8 @@ const SideMenu = ({ isMenuOpen, toggleMenu }) => {
             {category.name}
           </div>
 
-          {/* Display subcategories if the current category is open */}
           {openCategory === category.slug && (
             <div className="subcategory-list" style={{ paddingLeft: "20px" }}>
-              {/* Fetch subcategories for the open category */}
               {getSubcategories(category.slug).map((subcategory) => (
                 <div
                   key={subcategory.id}

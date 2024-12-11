@@ -21,7 +21,7 @@ const SubcategoryTemplate = ({ data }) => {
             .subcategory-template {
               font-family: Arial, sans-serif;
               color: #333;
-               padding:2rem;
+               padding:1rem;
             }
 
             header h1 {
@@ -109,6 +109,7 @@ const SubcategoryTemplate = ({ data }) => {
               font-size: 0.85rem;
               color: #777;
               margin-top: 0.5rem;
+              
             }
 
             .vertical-list {
@@ -259,7 +260,7 @@ hr.separator {
                     {getTimeAgo(post.date)} |{" "}
                     {post.categories?.nodes?.map(cat => cat.name).join(", ")}
                   </div>
-                  <hr className="separator" />
+                  <hr className="separator"/>
                 </Link>
               ))}
             </div>

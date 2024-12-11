@@ -22,7 +22,7 @@ const CategoryTemplate = ({ data }) => {
          
             font-family: Arial, sans-serif;
             color: #333;
-            padding: 2rem;
+            padding: 1rem;
           }
 
           header h1 {
