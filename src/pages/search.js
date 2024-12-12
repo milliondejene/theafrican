@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "@reach/router"
 import { graphql } from "gatsby"
-import Layout from "../components/layout/Layout" // Assuming you have a Layout component
+import Layout from "../components/layout/Layout"
 
 const SearchPage = ({ data }) => {
   const [searchResults, setSearchResults] = useState([])
@@ -15,18 +15,16 @@ const SearchPage = ({ data }) => {
     return text
   }
 
-  // This useEffect will run when the query parameter in the URL changes
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     const query = queryParams.get("q")
 
     if (query) {
-      setSearchTerm(query) // Update the search term from the query params
-      fetchSearchResults(query) // Fetch results based on the query
+      setSearchTerm(query)
+      fetchSearchResults(query)
     }
   }, [location.search])
 
-  // Function to fetch search results from the GraphQL query
   const fetchSearchResults = async query => {
     const filteredResults = data.allWpPost.edges.filter(({ node }) =>
       node.title.toLowerCase().includes(query.toLowerCase())
@@ -37,45 +35,46 @@ const SearchPage = ({ data }) => {
   return (
     <Layout>
       <div className="search-page">
-        {/* Styles within <style> tag */}
         <style>
           {`
             .search-page {
               padding: 40px 20px;
             }
 
-          .search-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* Add space between input and button */
-}
+            .search-container {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: center;
+              gap: 10px;
+              margin-bottom: 8px;
+            }
 
+            .search-container input {
+              flex: 1;
+              padding: 15px;
+              max-width: calc(100% - 110px);
+              font-size: 18px;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+            }
 
-        .search-container input {
-  flex: 1; /* Allow input to take available space */
-  padding: 15px;
-  max-width: calc(100% - 110px); /* Adjust to leave space for button */
-  font-size: 18px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.searchButton{
-background-color: black;
-color:white;
-padding: 10px 20px;
-}
-            .search-container button 
-             font-size: 18px;
-             padding: 20px 40px;
+            .searchButton {
+              background-color: black;
+              color: white;
+              padding: 10px 20px;
+            }
+
+            .search-container button {
+              font-size: 18px;
+              padding: 20px 40px;
               margin-left: 5px;
               cursor: pointer;
               border-radius: 5px;
               border: 1px solid #ccc;
               background-color: black;
-             
             }
+
             .search-results {
               margin-top: 20px;
             }
@@ -83,14 +82,14 @@ padding: 10px 20px;
             .search-result-row {
               display: flex;
               flex-direction: row;
-              margin-bottom: 30px;
               align-items: flex-start;
+              justify-content: space-between;
+              margin-bottom: 30px;
               border-bottom: 1px solid #ddd;
               padding-bottom: 20px;
             }
 
             .time-category {
-            
               color: #999;
               font-size: 14px;
               margin-bottom: 10px;
@@ -105,10 +104,10 @@ padding: 10px 20px;
             .title-excerpt-image {
               flex: 1;
               display: flex;
-              flex-direction: row;
               justify-content: space-between;
-              padding-left: 20px;
               align-items: flex-start;
+              padding-left: 20px;
+              margin-top: 10px;
             }
 
             .text-content {
@@ -119,6 +118,7 @@ padding: 10px 20px;
             .post-link {
               color: #333;
               text-decoration: none;
+              font-weight: bold;
             }
 
             .excerpt {
@@ -128,14 +128,16 @@ padding: 10px 20px;
             }
 
             .featured-image {
-              flex: 0 0 150px;
+              flex: 0 0 200px;
+              margin-left: 20px;
+              border-radius: 1px;
             }
 
             .placeholder-image {
               width: 100%;
               height: 100%;
               background: #f4f4f4;
-              border-radius: 5px;
+              border-radius: 1px;
             }
 
             .no-results {
@@ -144,6 +146,7 @@ padding: 10px 20px;
               color: #555;
             }
 
+            /* Mobile specific styles */
             @media (max-width: 768px) {
               .search-result-row {
                 flex-direction: column;
@@ -151,31 +154,72 @@ padding: 10px 20px;
               }
 
               .time-category {
-                margin-bottom: 10px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: 10px;
+                font-size: 14px;
+                gap: 5px;
               }
 
-               .title-excerpt-image {
-    flex-direction: row; /* Ensure title and image are side by side */
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%; /* Ensure it spans the full width */
-    margin-top: 10px; /* Add spacing from the top */
-  }
-     .text-content {
-    flex: 1; /* Allow the text content to take available space */
-    padding-right: 10px; /* Add some spacing between text and image */
-  }
+              .time-category div::after {
+                content: "|";
+                margin: 0 5px;
+              }
+
+              .time-category div:last-child::after {
+                content: "";
+              }
+
+              .title-excerpt-image {
+                flex-direction: row; /* Change to row on mobile */
+                align-items: flex-start;
+                width: 100%;
+                margin-top: 10px;
+              }
+
+              .text-content {
+                flex: 1;
+                padding-right: 10px;
+              }
 
               .featured-image {
                 margin-top: 20px;
+                margin-left: 20px; /* Add space between image and text */
               }
 
-  .time-category {
-    margin-top: 10px; /* Adjust spacing from the content */
-    order: 1; /* Move below content on mobile */
-    text-align: left; /* Align to the left for consistency */
-    width: 100%;
-  }
+              .time-category {
+                order: 2; /* Move time-category below the excerpt */
+              }
+
+              .mobile-category {
+                display: block;
+              }
+
+              .desktop-category {
+                display: none;
+                color:#999;
+              }
+            }
+
+            /* Desktop specific styles */
+            @media (min-width: 769px) {
+              .search-result-row {
+                flex-direction: row;
+              }
+
+              .mobile-category {
+                display: none;
+              }
+
+              .desktop-category {
+                display: block;
+                 color:#999;
+              }
+
+              .time-category {
+                order: 0;
+              }
             }
           `}
         </style>
@@ -185,14 +229,14 @@ padding: 10px 20px;
           <input
             type="text"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)} // Update searchTerm as user types
+            onChange={e => setSearchTerm(e.target.value)}
             placeholder="Search..."
           />
-          <button className="searchButton"
+          <button
+            className="searchButton"
             onClick={() => {
-              // Update the URL with the new search query without refreshing the page
               window.history.pushState({}, "", `/search?q=${searchTerm}`)
-              fetchSearchResults(searchTerm) // Fetch results based on the updated search term
+              fetchSearchResults(searchTerm)
             }}
           >
             Search
@@ -207,7 +251,7 @@ padding: 10px 20px;
                 {/* Time Ago & Category (for mobile, will stack below each other) */}
                 <div className="time-category">
                   <div>{node.date}</div>
-                  <div className="category">
+                  <div className="mobile-category">
                     {node.categories.nodes
                       .map(category => category.name)
                       .join(", ")}
@@ -216,7 +260,6 @@ padding: 10px 20px;
 
                 {/* Title, Excerpt & Featured Image */}
                 <div className="title-excerpt-image">
-                  {/* Title & Excerpt */}
                   <div className="text-content">
                     <h3>
                       <a href={`/post/${node.slug}`} className="post-link">
@@ -228,6 +271,11 @@ padding: 10px 20px;
                         __html: truncateText(node.excerpt, 100),
                       }}
                     />
+                    <div className="desktop-category">
+                      {node.categories.nodes
+                        .map(category => category.name)
+                        .join(", ")}
+                    </div>
                   </div>
 
                   {/* Featured Image */}
@@ -247,7 +295,6 @@ padding: 10px 20px;
                     )}
                   </div>
                 </div>
-             
               </div>
             ))
           ) : (
@@ -259,7 +306,6 @@ padding: 10px 20px;
   )
 }
 
-// Gatsby's page query to fetch posts data from WordPress
 export const query = graphql`
   query {
     allWpPost {
