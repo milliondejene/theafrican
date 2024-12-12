@@ -3,7 +3,7 @@
 .header {
   background-color: #fff;
   color: #000;
-  text-align: center;
+  text-align: left;
   transition: padding 0.3s ease-in-out;
   position: relative;
 }
@@ -22,7 +22,10 @@
   justify-content: space-between;
   padding: 10px 20px;
   position: relative;
+  z-index: 1001; /* Ensure it's above the side menu and overlay */
+  background-color: white; /* Make it visible with a solid background */
 }
+
 
 /* Left corner: Align menu and search icons */
 .left-icons {

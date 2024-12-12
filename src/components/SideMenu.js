@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
-import { MdSearch } from "react-icons/md";
+import { MdSearch, MdExpandMore, MdExpandLess } from "react-icons/md";
 import useCategories from "../hooks/useCategories";
 import useActiveCategory from "../hooks/useActiveCategory";
 
@@ -14,11 +14,6 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
   } = useActiveCategory();
 
   const [openCategory, setOpenCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredCategories = categories.filter((category) =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const handleCategoryToggle = (categorySlug, event) => {
     event.preventDefault();
@@ -37,85 +32,131 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
     setActiveSubcategory(subcategorySlug);
   };
 
+  // Style Object
+  const styles = {
+    sideMenu: {
+      transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
+      transition: "transform 0.3s ease",
+      width: "390px",
+      position: "fixed",
+      top: "56px",
+      bottom: "0",
+      left: "0",
+      backgroundColor: "#fff",
+      boxShadow: "2px 0 5px rgba(0,0,0,0.5)",
+      zIndex: "1000",
+      paddingTop: "20px",
+    },
+    searchContainer: {
+      display: "flex",
+      alignItems: "center",
+      padding: "10px",
+      borderBottom: "1px solid #ddd",
+    },
+    searchInput: {
+      border: "1px solid #ddd",
+      borderRadius: "4px",
+      padding: "8px",
+      width: "100%",
+      fontSize: "14px",
+    },
+    searchIcon: {
+      marginLeft: "10px",
+    },
+    categoryItem: {
+      padding: "10px",
+      cursor: "pointer",
+      textAlign: "left",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      fontWeight: "600",
+      fontSize: "16px",
+      color: "#333",
+    },
+    activeCategory: {
+      backgroundColor: "#f0f0f0",
+    },
+    subcategoryList: {
+      paddingLeft: "20px",
+    },
+    subcategoryItem: {
+      padding: "5px 10px",
+      cursor: "pointer",
+      fontWeight: "400",
+      fontSize: "14px",
+      color: "#555",
+      borderRadius: "4px",
+    },
+    activeSubcategory: {
+      backgroundColor: "#e9e9e9",
+    },
+  };
+
   return (
     <div
       className={`side-menu ${isMenuOpen ? "open" : ""}`}
-      style={{
-        transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.3s ease",
-        width: "375px",
-        position: "fixed",
-        top: "60px",
-        bottom: "0",
-        left: "0",
-        backgroundColor: "#fff",
-        boxShadow: "2px 0 5px rgba(0,0,0,0.5)",
-        zIndex: "1000",
-        paddingTop: "20px",
-      }}
+      style={styles.sideMenu}
     >
-      <div
-        className="search-container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "10px",
-          borderBottom: "1px solid #ddd",
-        }}
-      >
+      {/* Search Bar */}
+      <div className="search-container" style={styles.searchContainer}>
         <input
           type="text"
-          ref={searchInputRef} // Attach the ref here
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search categories..."
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-            padding: "8px",
-            width: "100%",
-            fontSize: "14px",
-          }}
+          ref={searchInputRef}
+          placeholder="Search..."
+          style={styles.searchInput}
         />
-         <button className="search-icon">
-        <MdSearch size={30} color="#333" style={{ marginLeft: "10px" }} />
-        </button>
+        <Link to={`/search?q=${searchInputRef.current?.value || ""}`}>
+          <button className="search-icon">
+            <MdSearch size={30} color="#333" style={styles.searchIcon} />
+          </button>
+        </Link>
       </div>
 
-      {filteredCategories.map((category) => (
+      {/* Categories List */}
+      {categories.map((category) => (
         <div key={category.id}>
+          {/* Category Item */}
           <div
             className="category-item"
             onClick={(event) => handleCategoryToggle(category.slug, event)}
             style={{
-              padding: "10px",
-              cursor: "pointer",
-              backgroundColor:
-                activeCategory === category.slug ? "#ddd" : "transparent",
-              textAlign: "left",
+              ...styles.categoryItem,
+              ...(activeCategory === category.slug && styles.activeCategory),
             }}
           >
-            {category.name}
+            <span onClick={() => handleCategoryClick(category.slug)}>
+              {category.name}
+            </span>
+            {/* Toggle Icon */}
+            {openCategory === category.slug ? (
+              <MdExpandLess size={20} />
+            ) : (
+              <MdExpandMore size={20} />
+            )}
           </div>
 
+          {/* Subcategories List */}
           {openCategory === category.slug && (
-            <div className="subcategory-list" style={{ paddingLeft: "20px" }}>
+            <div className="subcategory-list" style={styles.subcategoryList}>
               {getSubcategories(category.slug).map((subcategory) => (
                 <div
                   key={subcategory.id}
                   className="subcategory-item"
                   onClick={() => handleSubcategoryClick(subcategory.slug)}
                   style={{
-                    padding: "5px 10px",
-                    cursor: "pointer",
-                    backgroundColor:
-                      activeSubcategory === subcategory.slug
-                        ? "#ddd"
-                        : "transparent",
-                    textAlign: "left",
+                    ...styles.subcategoryItem,
+                    ...(activeSubcategory === subcategory.slug &&
+                      styles.activeSubcategory),
                   }}
                 >
-                  <Link to={`/${category.slug}/${subcategory.slug}`}>
+                  <Link
+                    to={`/${category.slug}/${subcategory.slug}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                    }}
+                  >
                     {subcategory.name}
                   </Link>
                 </div>
