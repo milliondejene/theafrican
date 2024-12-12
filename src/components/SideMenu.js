@@ -60,8 +60,9 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
       width: "100%",
       fontSize: "14px",
     },
-    searchIcon: {
-      marginLeft: "10px",
+    searchIcon:{
+      backgroundColor: "black",
+      color: "white",
     },
     categoryItem: {
       padding: "10px",

@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "@reach/router";
-import { graphql } from "gatsby";
-import Layout from "../components/layout/Layout"; // Assuming you have a Layout component
+import React, { useEffect, useState } from "react"
+import { useLocation } from "@reach/router"
+import { graphql } from "gatsby"
+import Layout from "../components/layout/Layout" // Assuming you have a Layout component
 
 const SearchPage = ({ data }) => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const location = useLocation();
+  const [searchResults, setSearchResults] = useState([])
+  const [searchTerm, setSearchTerm] = useState("")
+  const location = useLocation()
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.substring(0, maxLength)}...`
+    }
+    return text
+  }
 
   // This useEffect will run when the query parameter in the URL changes
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const query = queryParams.get("q");
+    const queryParams = new URLSearchParams(location.search)
+    const query = queryParams.get("q")
 
     if (query) {
-      setSearchTerm(query); // Update the search term from the query params
-      fetchSearchResults(query); // Fetch results based on the query
+      setSearchTerm(query) // Update the search term from the query params
+      fetchSearchResults(query) // Fetch results based on the query
     }
-  }, [location.search]);
+  }, [location.search])
 
   // Function to fetch search results from the GraphQL query
-  const fetchSearchResults = async (query) => {
+  const fetchSearchResults = async query => {
     const filteredResults = data.allWpPost.edges.filter(({ node }) =>
       node.title.toLowerCase().includes(query.toLowerCase())
-    );
-    setSearchResults(filteredResults);
-  };
+    )
+    setSearchResults(filteredResults)
+  }
 
   return (
     <Layout>
@@ -37,31 +44,38 @@ const SearchPage = ({ data }) => {
               padding: 40px 20px;
             }
 
-            .search-container {
-              text-align: center;
-              margin-bottom: 40px;
-            }
+          .search-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Add space between input and button */
+}
 
-            .search-container input {
-              padding: 15px;
-              width: 100%;
-              max-width: 600px;
-              font-size: 18px;
-              border-radius: 5px;
-              border: 1px solid #ccc;
-            }
 
-            .search-container button {
-              padding: 15px 30px;
-              font-size: 18px;
-              margin-left: 10px;
+        .search-container input {
+  flex: 1; /* Allow input to take available space */
+  padding: 15px;
+  max-width: calc(100% - 110px); /* Adjust to leave space for button */
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.searchButton{
+background-color: black;
+color:white;
+padding: 10px 20px;
+}
+            .search-container button 
+             font-size: 18px;
+             padding: 20px 40px;
+              margin-left: 5px;
               cursor: pointer;
               border-radius: 5px;
               border: 1px solid #ccc;
               background-color: black;
-              color: white;
+             
             }
-
             .search-results {
               margin-top: 20px;
             }
@@ -76,7 +90,7 @@ const SearchPage = ({ data }) => {
             }
 
             .time-category {
-              flex: 0 0 120px;
+            
               color: #999;
               font-size: 14px;
               margin-bottom: 10px;
@@ -140,14 +154,28 @@ const SearchPage = ({ data }) => {
                 margin-bottom: 10px;
               }
 
-              .title-excerpt-image {
-                flex-direction: column;
-                align-items: flex-start;
-              }
+               .title-excerpt-image {
+    flex-direction: row; /* Ensure title and image are side by side */
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%; /* Ensure it spans the full width */
+    margin-top: 10px; /* Add spacing from the top */
+  }
+     .text-content {
+    flex: 1; /* Allow the text content to take available space */
+    padding-right: 10px; /* Add some spacing between text and image */
+  }
 
               .featured-image {
                 margin-top: 20px;
               }
+
+  .time-category {
+    margin-top: 10px; /* Adjust spacing from the content */
+    order: 1; /* Move below content on mobile */
+    text-align: left; /* Align to the left for consistency */
+    width: 100%;
+  }
             }
           `}
         </style>
@@ -157,14 +185,14 @@ const SearchPage = ({ data }) => {
           <input
             type="text"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm as user types
+            onChange={e => setSearchTerm(e.target.value)} // Update searchTerm as user types
             placeholder="Search..."
           />
-          <button
+          <button className="searchButton"
             onClick={() => {
               // Update the URL with the new search query without refreshing the page
-              window.history.pushState({}, "", `/search?q=${searchTerm}`);
-              fetchSearchResults(searchTerm); // Fetch results based on the updated search term
+              window.history.pushState({}, "", `/search?q=${searchTerm}`)
+              fetchSearchResults(searchTerm) // Fetch results based on the updated search term
             }}
           >
             Search
@@ -180,7 +208,9 @@ const SearchPage = ({ data }) => {
                 <div className="time-category">
                   <div>{node.date}</div>
                   <div className="category">
-                    {node.categories.nodes.map((category) => category.name).join(", ")}
+                    {node.categories.nodes
+                      .map(category => category.name)
+                      .join(", ")}
                   </div>
                 </div>
 
@@ -193,7 +223,11 @@ const SearchPage = ({ data }) => {
                         {node.title}
                       </a>
                     </h3>
-                    <p className="excerpt">{node.excerpt}</p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: truncateText(node.excerpt, 100),
+                      }}
+                    />
                   </div>
 
                   {/* Featured Image */}
@@ -213,6 +247,7 @@ const SearchPage = ({ data }) => {
                     )}
                   </div>
                 </div>
+             
               </div>
             ))
           ) : (
@@ -221,8 +256,8 @@ const SearchPage = ({ data }) => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
 // Gatsby's page query to fetch posts data from WordPress
 export const query = graphql`
@@ -248,6 +283,6 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 
-export default SearchPage;
+export default SearchPage
