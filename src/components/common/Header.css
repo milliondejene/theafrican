@@ -1,328 +1,362 @@
-/* Base Header styles */
-/* Base Header styles */
-.header {
-  background-color: #fff;
-  color: #000;
-  text-align: left;
-  transition: padding 0.3s ease-in-out;
-  position: relative;
-}
+ /* ------------------------ Base Header Styles ------------------------ */
+    /* The header is styled with a background color and transitions for smooth changes */
+    .header {
+      background-color: #fff;
+      color: #000;
+      text-align: left;
+      transition: padding 0.3s ease-in-out;
+      position: relative;
+    }
 
-.header.scrolled {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-}
+    /* When the page is scrolled, make the header fixed at the top of the page */
+    .header.scrolled {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  position: relative;
-  z-index: 1001; /* Ensure it's above the side menu and overlay */
-  background-color: white; /* Make it visible with a solid background */
-}
+    /* ------------------------ Logo Container Styles ------------------------ */
+    /* Logo container with flex layout to arrange elements */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      position: relative;
+      z-index: 1001; /* Ensure it's above the side menu and overlay */
+      background-color: white; /* Solid background for visibility */
+    }
 
+    /* ------------------------ Left Icons Section ------------------------ */
+    /* Flex container for menu and search icons aligned to the left */
+    .left-icons {
+      display: flex;
+      gap: 10px; /* Add space between icons */
+    }
 
-/* Left corner: Align menu and search icons */
-.left-icons {
-  display: flex;
-  gap: 10px; /* Add space between icons */
-}
-.menu-icon {
-  font-size: 1.5rem;
-}
-.menu-icon,
-.search-icon {
-  background: transparent; /* Make icon background transparent */
-  border: none;
-  cursor: pointer;
-}
-
-/* Remove text decoration for brand link */
-.brand-link {
-  flex-grow: 1; /* Let it take up all available space */
-  text-align: center; /* Center-align the text */
-  font-weight: bold;
-  font-size: 1.2rem;
-  text-decoration: none; /* Remove underline */
-  color: #333; /* Set the text color */
-}
-
-/* Right corner: Align Sign In and Register buttons */
-.right-buttons {
-  display: flex;
-  gap: 10px; /* Add space between buttons */
-}
-
-.register-button {
-  background-color: #000;
-  color: #fff; /* White text */
-  padding: 8px 16px;
-  font-size: 0.70rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: block; /* Make the button a block element */
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.register-button:hover {
-  background-color: #444;
-}
-
-.signin-button {
-  background-color: transparent;
-  color: #000; /* Black text */
-  padding: 10px 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none; /* No border */
-  transition: color 0.3s ease;
-}
-
-.signin-button:hover {
-  color: #444;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .logo-container {
-    flex-wrap: wrap; /* Allow elements to wrap if needed */
-    padding: 10px;
-  }
-
-
-  .left-icons,
-  .right-buttons {
-    flex-basis: 25%; /* Allocate space for both corners */
-    justify-content: flex-start;
-  }
-
-  .brand-link {
-    flex-basis: 50%; /* Center the brand link */
-    text-align: center;
-  }
-
-  .signin-button,
-  .register-button {
-    font-size: 0.8rem;
-    padding: 5px 8px;
-  }
-}
-
-/* Ensure brand link remains in the center */
-.brand-link {
-  flex-grow: 1; /* Let it take up all available space */
-  text-align: center; /* Center-align the text */
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-
-/* Position the left and right buttons */
-
-
-
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center; /* Center categories */
-  gap: 1rem;
-  overflow-x: auto; /* Allow horizontal scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
-  white-space: nowrap; /* Prevent wrapping */
-}
-
-.nav-list::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in WebKit browsers */
-}
-
-.nav-item {
-  flex-shrink: 0; /* Prevent shrinking */
-}
-
-.category-button {
-  font-weight: bold;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 0.85rem;
-  color: #000;
-  text-transform: uppercase;
-  padding: 0.2rem 0.5rem;
-  transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
-  border-bottom: 2px solid transparent;
-  white-space: nowrap; /* Keep buttons on one line */
-}
-
-.category-button.active {
-  border-bottom: 3px solid rgb(57, 110, 51);
-  color: #000;
-}
-
-.category-button:hover {
-  color: #555;
-}
-
-/* Responsive Design for Mobile */
-@media (max-width: 768px) {
-  .nav-list {
-    justify-content: flex-start; /* Align to the start for easier scrolling */
-  }
-}
-
-hr.separator {
-  margin-bottom: 0; /* Removes the bottom margin */
-}
-
-/* Submenu Styles */
-.horizontal-line {
-  border-top: 1px solid #ddd;
-  width: 100%;
-}
-
-.submenu-container {
-  max-width: 100%;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-  display: block; /* Default visible, controlled by JS logic */
-}
-
-.subcategories {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.subcategory-link {
-  text-decoration: none;
-  color: #000;
-  font-size: 0.8rem;
-  padding: 0.3rem 0.6rem;
-  transition: color 0.3s ease-in-out;
-}
-
-.subcategory-link.active {
-  color: red;
-}
-
-.subcategory-link:hover {
-  color: red;
-}
-
-/* Side menu styles (for desktop and mobile) */
-.side-menu {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 25%; /* Default width for desktop */
-  background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 20;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.side-menu.open {
-  transform: translateX(0);
-}
-
-.side-menu .category-item {
-  padding: 1rem;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-
-.side-menu .subcategory-item {
-  padding: 1rem;
-  padding-left: 2rem;
-  
-  border-bottom: 1px solid #f2f2f2;
-  text-decoration: none;
-}
-
-.menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 10; /* Ensure it is below the logo container */
-}
-
-.menu-overlay.open {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-  /* Hide the category and subcategory on mobile */
-  .nav-list {
-      display: none;
-  }
-  .signin-button,
-  .register-button {
-    display: none; /* Hide these buttons on mobile */
-  }
-
-  separator-mob{
-    display: none;
-  }
-  .submenu-container {
-      display: none;
-  }
-
-  /* Adjust the logo and buttons for smaller screens */
-  .logo-container {
-      font-size: 1.25rem;
-  }
-
-  .logo-container button {
-      font-size: 1.6rem;
-  }
-  .menu-icon {
-    font-size: 2rem;
-  }
-  /* Side menu styles for mobile */
-  .side-menu {
-      width: 100%; /* Full width for mobile */
-      padding: 15px;
-  }
-
-  .side-menu .category-item {
-      padding: 0.8rem;
-  }
-
-  /* Ensure the menu overlay takes over the screen */
-  .menu-overlay.open {
-    z-index: 15; /* Ensure the overlay is above other content */
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-container {
-      font-size: 1.1rem;
-  }
-
-  .logo-container button {
+    /* Style for menu icon */
+    .menu-icon {
       font-size: 1.5rem;
-  }
-}
+    }
+
+    /* Style for menu and search icons */
+    .menu-icon, .search-icon {
+      background: transparent; /* Transparent background for icons */
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ------------------------ Brand Link Styles ------------------------ */
+    /* Centered brand link in the middle of the header */
+    .brand-link {
+      flex-grow: 1; /* Allow the brand link to take up available space */
+      text-align: center; /* Center the text */
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none; /* Remove underline from the link */
+      color: #333; /* Set text color */
+    }
+
+    /* ------------------------ Right Buttons Section ------------------------ */
+    /* Flex container for Sign In and Register buttons */
+    .right-buttons {
+      display: flex;
+      gap: 10px; /* Add space between buttons */
+    }
+
+    /* Register button styles */
+    .register-button {
+      background-color: #000;
+      color: #fff; /* White text */
+      padding: 8px 16px;
+      font-size: 0.70rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: block; /* Block-level button */
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Hover effect for register button */
+    .register-button:hover {
+      background-color: #444;
+    }
+
+    /* Sign In button styles */
+    .signin-button {
+      background-color: transparent;
+      color: #000; /* Black text */
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: color 0.3s ease;
+    }
+
+    /* Hover effect for sign-in button */
+    .signin-button:hover {
+      color: #444;
+    }
+
+    /* ------------------------ Mobile Responsiveness ------------------------ */
+    /* Styles for screens smaller than 768px */
+    @media (max-width: 768px) {
+      /* Logo container adjusts for smaller screens */
+      .logo-container {
+        flex-wrap: wrap; /* Allow elements to wrap */
+        padding: 10px;
+      }
+
+      /* Left and right icons get adjusted for mobile */
+      .left-icons, .right-buttons {
+        flex-basis: 25%; /* Allocate space for both corners */
+        justify-content: flex-start;
+      }
+
+      /* Brand link adjusts its size on mobile */
+      .brand-link {
+        flex-basis: 50%; /* Center the brand link */
+        text-align: center;
+      }
+
+      /* Adjust font size and padding for buttons on mobile */
+      .signin-button, .register-button {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+      }
+    }
+
+    /* Ensure brand link remains in the center */
+    .brand-link {
+      flex-grow: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* ------------------------ Navigation List Styles ------------------------ */
+    /* Navigation list with horizontal scrolling for categories */
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center; /* Center categories */
+      gap: 1rem;
+      overflow-x: auto; /* Allow horizontal scrolling */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling for mobile devices */
+      scrollbar-width: none; /* Hide scrollbar in Firefox */
+      white-space: nowrap; /* Prevent wrapping of items */
+    }
+
+    /* Hide scrollbar in WebKit browsers */
+    .nav-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Styles for each nav item */
+    .nav-item {
+      flex-shrink: 0; /* Prevent shrinking of items */
+    }
+
+    /* Category button style */
+    .category-button {
+      font-weight: bold;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: #000;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap; /* Keep buttons on one line */
+    }
+
+    /* Active category button style */
+    .category-button.active {
+      border-bottom: 3px solid rgb(57, 110, 51);
+      color: #000;
+    }
+
+    /* Hover effect for category button */
+    .category-button:hover {
+      color: #555;
+    }
+
+    /* Mobile responsiveness for nav list */
+    @media (max-width: 768px) {
+      .nav-list {
+        justify-content: flex-start; /* Align to the start for easier scrolling */
+      }
+    }
+
+    /* Horizontal separator style */
+    hr.separator {
+      margin-bottom: 0;
+    }
+
+    /* ------------------------ Submenu Styles ------------------------ */
+    /* Horizontal line separating submenu */
+    .horizontal-line {
+      border-top: 1px solid #ddd;
+      width: 100%;
+    }
+
+    /* Submenu container visibility controlled by JS */
+    .submenu-container {
+      max-width: 100%;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+      display: block;
+    }
+
+    /* Subcategories flex layout */
+    .subcategories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Subcategory link style */
+    .subcategory-link {
+      text-decoration: none;
+      color: #000;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.6rem;
+      transition: color 0.3s ease-in-out;
+    }
+
+    /* Active subcategory link style */
+    .subcategory-link.active {
+      color: red;
+    }
+
+    /* Hover effect for subcategory link */
+    .subcategory-link:hover {
+      color: red;
+    }
+
+    /* ------------------------ Side Menu Styles ------------------------ */
+    /* Side menu styles for both desktop and mobile */
+    .side-menu {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 25%; /* Default width for desktop */
+      background-color: #fff;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 20;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Open side menu */
+    .side-menu.open {
+      transform: translateX(0);
+    }
+
+    /* Category item in side menu */
+    .side-menu .category-item {
+      padding: 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Subcategory item in side menu */
+    .side-menu .subcategory-item {
+      padding: 1rem;
+      padding-left: 2rem;
+      border-bottom: 1px solid #f2f2f2;
+      text-decoration: none;
+    }
+
+    /* Menu overlay (darkened background when side menu is open) */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    /* Menu overlay visible when the menu is open */
+    .menu-overlay.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* ------------------------ Mobile Device Media Queries ------------------------ */
+    /* Mobile device styles for screens with a max width of 768px */
+    @media (max-width: 768px) {
+      /* Hide the nav list and buttons on mobile */
+      .nav-list {
+        display: none;
+      }
+
+      .signin-button, .register-button {
+        display: none;
+      }
+
+      /* Hide the separator on mobile */
+      separator-mob {
+        display: none;
+      }
+
+      /* Hide submenu container on mobile */
+      .submenu-container {
+        display: none;
+      }
+
+      /* Adjust font size for the logo container */
+      .logo-container {
+        font-size: 1.25rem;
+      }
+
+      /* Adjust icon size */
+      .menu-icon {
+        font-size: 2rem;
+      }
+
+      /* Full width side menu for mobile */
+      .side-menu {
+        width: 100%; /* Full width for mobile */
+        padding: 15px;
+      }
+
+      /* Smaller padding for category items in side menu */
+      .side-menu .category-item {
+        padding: 0.8rem;
+      }
+
+      /* Adjust z-index for menu overlay */
+      .menu-overlay.open {
+        z-index: 15;
+      }
+    }
+
+    /* ------------------------ Extra Mobile Styles ------------------------ */
+    /* Adjust logo and button sizes for very small screens (max-width: 480px) */
+    @media (max-width: 480px) {
+      .logo-container {
+        font-size: 1.1rem;
+      }
+
+      .logo-container button {
+        font-size: 1.5rem;
+      }
+    }

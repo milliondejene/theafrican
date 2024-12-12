@@ -16,7 +16,7 @@ const PostTemplate = ({ data }) => {
       <article className="post-page">
       <style>
   {`
-    /* Base styles for the post */
+    /* -------------------- Base Styles for the Post -------------------- */
     .post-page {
       max-width: 800px;
       margin: 0 auto;
@@ -25,7 +25,7 @@ const PostTemplate = ({ data }) => {
       color: #333;
     }
 
-    /* Apply padding only to text content */
+    /* Apply padding only to text content (headings and paragraphs) */
     .post-page p,
     .post-page h1,
     .post-page h2,
@@ -33,44 +33,47 @@ const PostTemplate = ({ data }) => {
     .post-page h4,
     .post-page h5,
     .post-page h6 {
-      padding: 0rem 1rem 0rem 1rem;
+      padding: 0rem 1rem 0rem 1rem; /* Add horizontal padding */
     }
 
-    /* Reset padding for images and videos */
+    /* -------------------- Media Elements (Images, Videos, iFrames) -------------------- */
+    /* Reset padding and margin for images, iframes, and videos */
     .post-page img,
     .post-page iframe,
     .post-page video {
       padding: 0;
       margin: 0;
-      max-width: 100%;
-      width: 100%; /* Ensures videos occupy full width */
+      max-width: 100%;  /* Ensure elements are responsive */
+      width: 100%;      /* Videos occupy full width */
       height: auto;
       display: block;
     }
 
-    /* Featured image styling */
+    /* -------------------- Featured Image -------------------- */
+    /* Featured image styling for mobile and small screens */
     .featured-image {
-      width: 100%; /* Full width for smaller screens */
+      width: 100%;  /* Full width for smaller screens */
       height: auto;
     }
 
+    /* For tablet and desktop screens */
     @media (min-width: 768px) {
-      /* For tablet and desktop */
       .featured-image {
-        width: calc(100% + 200px); /* Extend beyond container width */
-        margin-left: -100px; /* Adjust left margin */
-        margin-right: -100px; /* Adjust right margin */
+        width: calc(100% + 200px); /* Extend image beyond container width */
+        margin-left: -100px;       /* Adjust left margin */
+        margin-right: -100px;      /* Adjust right margin */
       }
     }
 
-    /* WordPress-specific block handling */
+    /* -------------------- WordPress Block Handling -------------------- */
+    /* Specific handling for WordPress blocks, removing margin/padding */
     .post-page figure,
     .post-page .wp-block-image {
       margin: 0;
       padding: 0;
     }
 
-    /* Header styles */
+    /* -------------------- Header Section -------------------- */
     header {
       text-align: left;
       display: flex;
@@ -78,18 +81,21 @@ const PostTemplate = ({ data }) => {
       position: relative;
     }
 
+    /* Header title styling */
     header h1 {
       font-size: 2rem;
       color: black;
       margin-bottom: 0.5rem;
     }
 
+    /* Header paragraph styling */
     header p {
       font-size: 1rem;
       color: #555;
       margin-bottom: 0;
     }
 
+    /* Header top section for spacing and alignment */
     .header-top {
       display: flex;
       justify-content: space-between;
@@ -97,7 +103,8 @@ const PostTemplate = ({ data }) => {
       margin-top: 0.5rem;
     }
 
-    /* Share and Save icon styles */
+    /* -------------------- Action Links Section (Share, Save) -------------------- */
+    /* Styling for action links like share/save icons */
     .action-links {
       display: flex;
       justify-content: flex-end;
@@ -106,6 +113,7 @@ const PostTemplate = ({ data }) => {
       margin-bottom: 1.5rem;
     }
 
+    /* Individual action link (e.g., share/save button) */
     .action-link {
       display: flex;
       align-items: center;
@@ -115,6 +123,7 @@ const PostTemplate = ({ data }) => {
       font-size: 0.9rem;
     }
 
+    /* Action icon (e.g., share icon) styling */
     .action-icon {
       cursor: pointer;
       font-size: 1.2rem;
@@ -122,7 +131,8 @@ const PostTemplate = ({ data }) => {
       color: black;
     }
 
-    /* Author name styling */
+    /* -------------------- Author Information -------------------- */
+    /* Styling for the author's name */
     .author-name {
       font-weight: bold;
       color: #333;
@@ -131,6 +141,7 @@ const PostTemplate = ({ data }) => {
       z-index: 1;
     }
 
+    /* -------------------- Category Links -------------------- */
     /* Category links styling */
     .category-links {
       font-size: 0.9rem;
@@ -138,21 +149,25 @@ const PostTemplate = ({ data }) => {
       margin-top: 0.5rem;
     }
 
+    /* Category link (text) styling */
     .category-links a {
       text-decoration: none;
       color: #555;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease; /* Smooth color transition */
     }
 
+    /* Hover effect for category links */
     .category-links a:hover {
       color: #004999;
       text-decoration: underline;
     }
 
+    /* Category span styling */
     .category-links span {
       color: #555;
     }
 
+    /* Space between category links */
     .category-links span a {
       margin-right: 0.5rem;
     }

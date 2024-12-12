@@ -35,194 +35,253 @@ const SearchPage = ({ data }) => {
   return (
     <Layout>
       <div className="search-page">
-        <style>
-          {`
-            .search-page {
-              padding: 40px 20px;
-            }
+      <style>
+  {`
+    /* General styles for the search page */
+    .search-page {
+      padding: 40px 20px;
+    }
 
-            .search-container {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              align-items: center;
-              gap: 10px;
-              margin-bottom: 8px;
-            }
+    /* Container for search input and button */
+    .search-container {
+      display: flex;
+      justify-content: flex-start; /* Align items to the start */
+      align-items: center; /* Vertically align input and button */
+      gap: 4px; /* Remove gap to keep button next to input */
+      margin-bottom: 8px;
+      padding: 0 20px;
+    }
 
-            .search-container input {
-              flex: 1;
-              padding: 15px;
-              max-width: calc(100% - 110px);
-              font-size: 18px;
-              border-radius: 5px;
-              border: 1px solid #ccc;
-            }
+    /* Search input field */
+    .search-container input {
+      flex: 1;
+      padding: 10px;
+      max-width: calc(100% - 110px);
+      font-size: 18px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
 
-            .searchButton {
-              background-color: black;
-              color: white;
-              padding: 10px 20px;
-            }
+    /* Search button */
+    .search-container button {
+      font-size: 16px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: black;
+      color: white;
+      flex-shrink: 0; /* Prevent shrinking */
+    }
 
-            .search-container button {
-              font-size: 18px;
-              padding: 20px 40px;
-              margin-left: 5px;
-              cursor: pointer;
-              border-radius: 5px;
-              border: 1px solid #ccc;
-              background-color: black;
-            }
+    /* Results container */
+    .search-results {
+      margin-top: 20px;
+    }
 
-            .search-results {
-              margin-top: 20px;
-            }
+    /* Container for each result row */
+    .search-result-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 20px;
+    }
 
-            .search-result-row {
-              display: flex;
-              flex-direction: row;
-              align-items: flex-start;
-              justify-content: space-between;
-              margin-bottom: 30px;
-              border-bottom: 1px solid #ddd;
-              padding-bottom: 20px;
-            }
+    /* Time and category label */
+    .time-category {
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-            .time-category {
-              color: #999;
-              font-size: 14px;
-              margin-bottom: 10px;
-              text-align: center;
-            }
+    /* Category label for results */
+    .category {
+      font-size: 12px;
+      color: #555;
+    }
 
-            .category {
-              font-size: 12px;
-              color: #555;
-            }
+    /* Container for title, excerpt, and image */
+    .title-excerpt-image {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
 
-            .title-excerpt-image {
-              flex: 1;
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-start;
-              padding-left: 20px;
-              margin-top: 10px;
-            }
+    /* Text content (title, excerpt) */
+    .text-content {
+      flex: 1;
+      padding-right: 20px;
+    }
 
-            .text-content {
-              flex: 1;
-              padding-right: 20px;
-            }
+    /* Link for each post */
+    .post-link {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-            .post-link {
-              color: #333;
-              text-decoration: none;
-              font-weight: bold;
-            }
+    /* Excerpt text for each result */
+    .excerpt {
+      color: #555;
+      font-size: 16px;
+      margin-top: 5px;
+    }
 
-            .excerpt {
-              color: #555;
-              font-size: 16px;
-              margin-top: 5px;
-            }
+    /* Featured image container */
+    .featured-image {
+      flex: 0 0 150px;
+      margin-left: 20px;
+      border-radius: 1px;
+    }
 
-            .featured-image {
-              flex: 0 0 200px;
-              margin-left: 20px;
-              border-radius: 1px;
-            }
+    /* Placeholder for images */
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      background: #f4f4f4;
+      border-radius: 1px;
+    }
 
-            .placeholder-image {
-              width: 100%;
-              height: 100%;
-              background: #f4f4f4;
-              border-radius: 1px;
-            }
+    /* No results message */
+    .no-results {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+    }
 
-            .no-results {
-              text-align: center;
-              font-size: 18px;
-              color: #555;
-            }
+    /* -------------------- Mobile Specific Styles -------------------- */
+    /* Mobile screen (max-width: 768px) */
+    @media (max-width: 768px) {
+      /* Adjust layout for result rows */
+      .search-result-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
-            /* Mobile specific styles */
-            @media (max-width: 768px) {
-              .search-result-row {
-                flex-direction: column;
-                align-items: flex-start;
-              }
+      /* Adjust time category on mobile */
+      .time-category {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 14px;
+        gap: 5px;
+      }
 
-              .time-category {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                margin-top: 10px;
-                font-size: 14px;
-                gap: 5px;
-              }
+      /* Adjust time category separators */
+      .time-category div::after {
+        content: "|";
+        margin: 0 5px;
+      }
 
-              .time-category div::after {
-                content: "|";
-                margin: 0 5px;
-              }
+      .time-category div:last-child::after {
+        content: "";
+      }
 
-              .time-category div:last-child::after {
-                content: "";
-              }
+      /* Adjust layout for title, excerpt, and image on mobile */
+      .title-excerpt-image {
+        flex-direction: row; /* Change to row on mobile */
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 10px;
+      }
 
-              .title-excerpt-image {
-                flex-direction: row; /* Change to row on mobile */
-                align-items: flex-start;
-                width: 100%;
-                margin-top: 10px;
-              }
+      /* Adjust text content padding on mobile */
+      .text-content {
+        flex: 1;
+        padding-right: 10px;
+      }
 
-              .text-content {
-                flex: 1;
-                padding-right: 10px;
-              }
+      /* Adjust featured image on mobile */
+      .featured-image {
+        margin-top: 20px;
+        margin-left: 20px; /* Add space between image and text */
+      }
 
-              .featured-image {
-                margin-top: 20px;
-                margin-left: 20px; /* Add space between image and text */
-              }
+      /* Move time category below the excerpt */
+      .time-category {
+        order: 2;
+      }
 
-              .time-category {
-                order: 2; /* Move time-category below the excerpt */
-              }
+      /* Hide desktop category on mobile */
+      .mobile-category {
+        display: block;
+      }
 
-              .mobile-category {
-                display: block;
-              }
+      /* Show desktop category on mobile */
+      .desktop-category {
+        display: none;
+        color: #999;
+      }
 
-              .desktop-category {
-                display: none;
-                color:#999;
-              }
-            }
+      /* Adjust button styling for mobile */
+      .search-button {
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+      }
 
-            /* Desktop specific styles */
-            @media (min-width: 769px) {
-              .search-result-row {
-                flex-direction: row;
-              }
+      /* Hide excerpts and paragraphs on mobile */
+      .excerpt, p {
+        display: none;
+      }
+    }
 
-              .mobile-category {
-                display: none;
-              }
+    /* -------------------- Desktop Specific Styles -------------------- */
+    /* Desktop screen (min-width: 769px) */
+    @media (min-width: 769px) {
+      /* Adjust gap between search container items */
+      .search-container {
+        gap: 15px; /* Add spacing between elements */
+      }
 
-              .desktop-category {
-                display: block;
-                 color:#999;
-              }
+      /* Ensure input takes up full width on desktop */
+      .search-container input {
+        width: 100%;
+      }
 
-              .time-category {
-                order: 0;
-              }
-            }
-          `}
-        </style>
+      /* Keep desktop button styling */
+      .search-container button {
+        font-size: 16px;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: black;
+        color: white;
+        flex-shrink: 0; /* Prevent button from shrinking */
+      }
+
+      /* Maintain row layout for result rows on desktop */
+      .search-result-row {
+        flex-direction: row;
+      }
+
+      /* Hide mobile category on desktop */
+      .mobile-category {
+        display: none;
+      }
+
+      /* Show desktop category on desktop */
+      .desktop-category {
+        display: block;
+        color: #999;
+      }
+
+      /* Keep time-category order on desktop */
+      .time-category {
+        order: 0;
+      }
+    }
+  `}
+</style>
 
         {/* Search Bar */}
         <div className="search-container">
@@ -284,11 +343,6 @@ const SearchPage = ({ data }) => {
                       <img
                         src={node.featuredImage.node.sourceUrl}
                         alt={node.title}
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          borderRadius: "5px",
-                        }}
                       />
                     ) : (
                       <div className="placeholder-image" />

@@ -16,126 +16,142 @@ const CategoryTemplate = ({ data }) => {
   return (
     <Layout>
       <div className="category-page">
-        <style>
-          {`
-          .category-page {
-         
-            font-family: Arial, sans-serif;
-            color: #333;
-            padding: 1rem;
-          }
+      <style>
+  {`
+    /* -------------------- General Styles -------------------- */
+    .category-page {
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 1rem;
+    }
 
-          header h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: black;
-            text-align: left;
-          }
+    /* Header styles */
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: black;
+      text-align: left;
+    }
 
-          .grid-container {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-          }
+    /* Horizontal line separator */
+    hr.separator {
+      margin-bottom: 0; /* Removes the bottom margin */
+    }
 
-          .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-          }
+    /* -------------------- Layout Styles -------------------- */
+    /* Main container for grid layout */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 3fr 1fr; /* Main content and sidebar */
+      gap: 2rem;
+      margin-top: 2rem;
+    }
 
-          .grid-item {
-           text-decoration: none;
-            background-color: #fff;
-            text-align: left;
-            font-size: 0.9rem;
-            min-width: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-radius: 2px;
-            overflow: hidden;
-          }
+    /* Grid layout for posts */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-adjust columns */
+      gap: 1.5rem;
+    }
 
-          .grid-item img {
-            max-width: 100%;
-            height: 180px;
-            object-fit: cover;
-          }
+    /* Individual grid item styles (posts) */
+    .grid-item {
+      text-decoration: none;
+      background-color: #fff;
+      text-align: left;
+      font-size: 0.9rem;
+      min-width: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 2px;
+      overflow: hidden;
+    }
 
-          .grid-item h3 {
-         
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: black;
-          }
+    /* Image inside grid items */
+    .grid-item img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
 
-          .grid-item p {
-            font-size: 0.85rem;
-            color: #555;
-            margin-bottom: 0.5rem;
-          }
+    /* Title styles for grid items */
+    .grid-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: black;
+    }
 
-          .post-meta {
-            font-size: 0.85rem;
-            color: #999;
-          }
+    /* Excerpt or content paragraph styles for grid items */
+    .grid-item p {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
 
-          .vertical-list {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-          }
+    /* Post meta information (author, date) styles */
+    .post-meta {
+      font-size: 0.85rem;
+      color: #999;
+    }
 
-          .vertical-list h2 {
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-          }
+    /* -------------------- Vertical List Styles -------------------- */
+    /* Vertical list layout (for categories, tags, etc.) */
+    .vertical-list {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
 
-          .vertical-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-          }
+    /* Title for vertical list */
+    .vertical-list h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
 
-          .vertical-list li {
-            margin-bottom: 0.75rem;
-          }
+    /* Unordered list inside vertical list */
+    .vertical-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-          .vertical-list li a {
-            text-decoration: none;
-            color: black;
-            font-size: 1rem;
-          }
+    /* List items inside vertical list */
+    .vertical-list li {
+      margin-bottom: 0.75rem;
+    }
 
-          .vertical-list li a:hover {
-            color: #004999;
-          }
-hr.separator {
-  margin-bottom: 0; /* Removes the bottom margin */
-}
-          @media (max-width: 1024px) {
-            .grid-container {
-              grid-template-columns: 1fr;
-            }
-          }
+    /* Links inside list items */
+    .vertical-list li a {
+      text-decoration: none;
+      color: black;
+      font-size: 1rem;
+    }
 
-          @media (max-width: 768px) {
-            .category-page {
-           
-            }
-            hr.separator {
-  margin-bottom: 0; /* Removes the bottom margin */
-}
+    /* Hover effect for list links */
+    .vertical-list li a:hover {
+      color: #004999;
+    }
 
-            header h1 {
-              font-size: 1.5rem;
-              text-align: first;
-            }
-          }
-          `}
-        </style>
+    /* -------------------- Responsive Styles -------------------- */
+    /* Medium screens (max-width: 1024px) */
+    @media (max-width: 1024px) {
+      .grid-container {
+        grid-template-columns: 1fr; /* Stack grid items on smaller screens */
+      }
+    }
+
+    /* Small screens (max-width: 768px) */
+    @media (max-width: 768px) {
+      /* Header styles for mobile */
+      header h1 {
+        font-size: 1.5rem;
+        text-align: left;
+      }
+    }
+  `}
+</style>
+
 
         <header>
           <h1>{name}</h1>

@@ -16,207 +16,239 @@ const SubcategoryTemplate = ({ data }) => {
   return (
     <Layout>
       <div className="subcategory-template">
-        <style>
-          {`
-            .subcategory-template {
-              font-family: Arial, sans-serif;
-              color: #333;
-               padding:1rem;
-            }
+      <style>
+  {`
+    /* -------------------- Base Styles for Subcategory Template -------------------- */
+    .subcategory-template {
+      font-family: Arial, sans-serif;
+      color: #333;
+      padding: 1rem;
+    }
 
-            header h1 {
-              font-size: 2rem;
-              margin: 0 0 1rem;
-              text-align: first;
-            }
+    /* -------------------- Header Section -------------------- */
+    /* Header main title */
+    header h1 {
+      font-size: 2rem;
+      margin: 0 0 1rem;
+      text-align: left;
+    }
 
-            header h1 span.parent {
-              color: red;
-              font-weight: bold;
-            }
+    /* Header span elements for parent and subcategory */
+    header h1 span.parent {
+      color: red;
+      font-weight: bold;
+    }
 
-            header h1 span.subcategory {
-              color: black;
-            }
+    header h1 span.subcategory {
+      color: black;
+    }
 
-            header a {
-              font-size: 1rem;
-              color: #0066cc;
-              text-decoration: none;
-              display: block;
-              text-align: center;
-           
-            }
-            header li {
-              display: inline-block;
-            }
+    /* Header link styling */
+    header a {
+      font-size: 1rem;
+      color: #0066cc;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
 
-            header a:hover {
-              text-decoration: underline;
-            }
-            .grid-container {
-              display: grid;
-              grid-template-columns: 3fr 1fr;
-              gap: 1.5rem;
-              margin-top: 2rem;
-            }
+    /* Inline block display for list items */
+    header li {
+      display: inline-block;
+    }
 
-            .posts-grid {
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Flexible grid */
-              gap: 1.5rem;
-            }
+    /* Hover effect for links */
+    header a:hover {
+      text-decoration: underline;
+    }
 
-            .grid-item {
-            text-decoration: none;
-            color: black;.grid-item h3 
-              border-radius: 1px;
-              background-color: #fff;
-              transition: transform 0.2s ease;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-            }
+    /* -------------------- Grid Layout -------------------- */
+    /* Main container for grid layout */
+    .grid-container {
+      display: grid;
+      grid-template-columns: 3fr 1fr; /* Two-column layout with flexible ratio */
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
 
-            .grid-item:hover {
-              transform: translateY(-5px);
-            }
+    /* Posts grid layout, automatically adjusts for available space */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Flexible grid */
+      gap: 1.5rem;
+    }
 
-            .grid-item img {
-              width: 100%;
-              height: 180px;
-              object-fit: cover;
-              border-radius: 2px;
-              margin-bottom: 0.5rem;
-            }
+    /* -------------------- Grid Item Styling -------------------- */
+    /* Each grid item styling */
+    .grid-item {
+      text-decoration: none;
+      color: black;
+      border-radius: 1px;
+      background-color: #fff;
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-            .grid-item h3 {
-              font-size: 1.25rem;
-              color: black;
-              margin-bottom: 0.5rem;
-            }
+    /* Hover effect for grid items */
+    .grid-item:hover {
+      transform: translateY(-5px); /* Slightly lift the item */
+    }
 
-            .grid-item h3 a {
-              text-decoration: none;
-               color: black;
-            }
+    /* Image styling within grid item */
+    .grid-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 0.5rem;
+    }
 
-            .grid-item h3 a:hover {
-              text-decoration: underline;
-            }
+    /* Title styling within grid item */
+    .grid-item h3 {
+      font-size: 1.25rem;
+      color: black;
+      margin-bottom: 0.5rem;
+    }
 
-            .post-meta {
-              font-size: 0.85rem;
-              color: #777;
-              margin-top: 0.5rem;
-              
-            }
+    /* Title link styling */
+    .grid-item h3 a {
+      text-decoration: none;
+      color: black;
+    }
 
-            .vertical-list {
-              display: flex;
-              flex-direction: column;
-            }
+    /* Hover effect for title links */
+    .grid-item h3 a:hover {
+      text-decoration: underline;
+    }
 
-            .vertical-list h2 {
-              font-size: 1.5rem;
-              margin-bottom: 1rem;
-              text-align: left;
-            }
+    /* Post meta information styling */
+    .post-meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
 
-            .vertical-list ul {
-              list-style: none;
-              padding: 0;
-              margin: 0;
-            }
+    /* -------------------- Vertical List Styling -------------------- */
+    /* Vertical list layout */
+    .vertical-list {
+      display: flex;
+      flex-direction: column;
+    }
 
-            .vertical-list li {
-              margin-bottom: 0.75rem;
-            }
+    /* Heading for vertical list */
+    .vertical-list h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
 
-            .vertical-list li a {
-              text-decoration: none;
-              color: black;
-              font-size: 1rem;
-              transition: color 0.3s ease;
-            }
+    /* Remove list bullet points and padding */
+    .vertical-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
-            .vertical-list li a:hover {
-              color: #004999;
-              text-decoration: underline;
-            }
+    /* Styling for individual list items */
+    .vertical-list li {
+      margin-bottom: 0.75rem;
+    }
 
-            .vertical-list .post-meta {
-              font-size: 0.85rem;
-              color: #555;
-            }
+    /* Styling for list links */
+    .vertical-list li a {
+      text-decoration: none;
+      color: black;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
 
-            .no-posts {
-              font-size: 1rem;
-              color: #666;
-              margin-top: 2rem;
-              text-align: center;
-            }
+    /* Hover effect for list links */
+    .vertical-list li a:hover {
+      color: #004999;
+      text-decoration: underline;
+    }
 
-            /* Prevent link styles from affecting content */
-            .grid-item a {
-              color: inherit;
-              text-decoration: none;
-              display: block;
-              height: 100%;
-            }
+    /* Post meta inside vertical list */
+    .vertical-list .post-meta {
+      font-size: 0.85rem;
+      color: #555;
+    }
 
-            .grid-item a:hover {
-              text-decoration: none;
-              color: inherit;
-            }
-              hr.separator {
-  margin-bottom: 0; /* Removes the bottom margin */
-}
+    /* No posts message styling */
+    .no-posts {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 2rem;
+      text-align: center;
+    }
 
-            /* Responsive design for tablets */
-            @media (max-width: 1024px) {
-              .grid-container {
-                grid-template-columns: 1fr; /* Single column layout */
-              }
+    /* -------------------- Link Styling (Preventing Affect on Content) -------------------- */
+    .grid-item a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      height: 100%;
+    }
 
-              header h1 {
-                font-size: 1.75rem;
-              }
-            }
+    .grid-item a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
 
-            /* Responsive design for mobile */
-            @media (max-width: 768px) {
-              .subcategory-template {
-              }
+    /* Separator Styling */
+    hr.separator {
+      margin-bottom: 0; /* Removes the bottom margin */
+    }
 
-              header h1 {
-                font-size: 1.5rem;
-              }
-hr.separator {
-  margin-bottom: 0; /* Removes the bottom margin */
-}
-              header a {
-                font-size: 0.9rem;
-              }
+    /* -------------------- Responsive Design -------------------- */
+    /* Responsive design for tablets (1024px and below) */
+    @media (max-width: 1024px) {
+      .grid-container {
+        grid-template-columns: 1fr; /* Single column layout */
+      }
 
-              .grid-item img {
-                height: 150px;
-              }
+      header h1 {
+        font-size: 1.75rem; /* Adjust font size for smaller screens */
+      }
+    }
 
-              .vertical-list h2 {
-                font-size: 1.25rem;
-              }
+    /* Responsive design for mobile (768px and below) */
+    @media (max-width: 768px) {
+      /* Header adjustments */
+      header h1 {
+        font-size: 1.5rem;
+      }
 
-              .vertical-list li a {
-                font-size: 0.9rem;
-              }
+      /* Smaller font size for links in header */
+      header a {
+        font-size: 0.9rem;
+      }
 
-              .post-meta {
-                font-size: 0.8rem;
-              }
-            }
-          `}
-        </style>
+      /* Adjust grid item image size */
+      .grid-item img {
+        height: 150px;
+      }
+
+      /* Smaller vertical list heading */
+      .vertical-list h2 {
+        font-size: 1.25rem;
+      }
+
+      /* Adjust font size for list links */
+      .vertical-list li a {
+        font-size: 0.9rem;
+      }
+
+      /* Smaller post meta font size */
+      .post-meta {
+        font-size: 0.8rem;
+      }
+    }
+  `}
+</style>
+
 
         <header>
           <h1>
