@@ -33,7 +33,7 @@
     /* Flex container for menu and search icons aligned to the left */
     .left-icons {
       display: flex;
-      gap: 10px; /* Add space between icons */
+     
     }
 
     /* Style for menu icon */
@@ -195,6 +195,7 @@
       .nav-list {
         justify-content: flex-start; /* Align to the start for easier scrolling */
       }
+      
     }
 
     /* Horizontal separator style */

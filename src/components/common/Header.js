@@ -62,7 +62,7 @@ const Header = () => {
             {isMenuOpen ? "X" : "☰"}
           </button>
           <button onClick={handleSearchClick} className="search-icon">
-            <MdSearch size={25} color="#333" />
+            <MdSearch size={30} color="#333" />
           </button>
         </div>
 

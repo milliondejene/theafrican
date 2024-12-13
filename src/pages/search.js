@@ -65,13 +65,13 @@ const SearchPage = ({ data }) => {
     /* Search button */
     .search-container button {
       font-size: 16px;
-      padding: 10px 20px;
       cursor: pointer;
       border-radius: 5px;
       border: 1px solid #ccc;
       background-color: black;
       color: white;
-      flex-shrink: 0; /* Prevent shrinking */
+      flex-shrink: 0;
+      padding: 8px 16px;
     }
 
     /* Results container */
@@ -110,14 +110,12 @@ const SearchPage = ({ data }) => {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding-left: 20px;
       margin-top: 10px;
     }
 
     /* Text content (title, excerpt) */
     .text-content {
       flex: 1;
-      padding-right: 20px;
     }
 
     /* Link for each post */
@@ -196,7 +194,6 @@ const SearchPage = ({ data }) => {
       /* Adjust text content padding on mobile */
       .text-content {
         flex: 1;
-        padding-right: 10px;
       }
 
       /* Adjust featured image on mobile */
@@ -250,7 +247,6 @@ const SearchPage = ({ data }) => {
       /* Keep desktop button styling */
       .search-container button {
         font-size: 16px;
-        padding: 10px 20px;
         cursor: pointer;
         border-radius: 5px;
         border: 1px solid #ccc;
