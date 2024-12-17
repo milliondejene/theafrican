@@ -1,52 +1,36 @@
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import PropTypes from "prop-types"
+import React from "react";
+import PropTypes from "prop-types";
 
 const SEO = ({ title, description, pathname, image, article }) => {
-  const { site } = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-          description
-          siteUrl
-          twitterUsername
-          keywords
-          organization {
-            name
-            email
-            phone
-            address
-          }
-          social {
-            facebook
-            twitter
-            instagram
-            linkedin
-            youtube
-          }
-        }
-      }
-    }
-  `)
+  // Default metadata
+  const defaultTitle = "The African - Your Source for African News and Insights";
+  const defaultDescription =
+    "Stay updated with the latest news, stories, and insights from Africa, brought to you by The African.";
+  const siteUrl = "https://www.theafrican.co";
+  const twitterUsername = "@TheAfrican";
+  const defaultImage = `${siteUrl}/default-image.jpg`; // Replace with your default image path
+  const organization = {
+    name: "The African",
+    email: "contact@theafrican.co",
+    phone: "+1234567890",
+    address: "123 African Street, Nairobi, Kenya",
+  };
+  const social = {
+    facebook: "https://www.facebook.com/theafrican",
+    twitter: "https://twitter.com/theafrican",
+    instagram: "https://www.instagram.com/theafrican",
+    linkedin: "https://www.linkedin.com/company/theafrican",
+    youtube: "https://www.youtube.com/channel/theafrican",
+  };
 
-  const {
-    title: defaultTitle,
-    description: defaultDescription,
-    siteUrl,
-    twitterUsername,
-    keywords,
-    organization,
-    social,
-  } = site.siteMetadata
-
+  // Construct SEO metadata
   const seo = {
     title: title ? `${title} | ${defaultTitle}` : defaultTitle,
     description: description || defaultDescription,
     url: `${siteUrl}${pathname || "/"}`,
-    image: image ? `${siteUrl}${image}` : `${siteUrl}/default-image.jpg`, // Ensure you have a default image
-    keywords: keywords?.join(", "),
-  }
+    image: image ? `${siteUrl}${image}` : defaultImage,
+    keywords: "Africa, News, Insights, Stories, The African",
+  };
 
   return (
     <>
@@ -62,39 +46,39 @@ const SEO = ({ title, description, pathname, image, article }) => {
       <meta property="og:type" content={article ? "article" : "website"} />
       <meta property="og:url" content={seo.url} />
       <meta property="og:image" content={seo.image} />
-      <meta property="og:site_name" content={organization?.name || "The African"} />
+      <meta property="og:site_name" content={organization.name} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seo.title} />
       <meta name="twitter:description" content={seo.description} />
       <meta name="twitter:image" content={seo.image} />
-      {twitterUsername && <meta name="twitter:creator" content={twitterUsername} />}
+      <meta name="twitter:creator" content={twitterUsername} />
 
       {/* Organization Schema */}
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: organization?.name || "The African",
+          name: organization.name,
           url: siteUrl,
           logo: `${siteUrl}/logo.png`, // Replace with your actual logo URL
           contactPoint: {
             "@type": "ContactPoint",
-            email: organization?.email,
-            telephone: organization?.phone,
+            email: organization.email,
+            telephone: organization.phone,
             contactType: "Customer Support",
           },
           address: {
             "@type": "PostalAddress",
-            addressLocality: organization?.address,
+            addressLocality: organization.address,
           },
           sameAs: [
-            social?.facebook,
-            social?.twitter,
-            social?.instagram,
-            social?.linkedin,
-            social?.youtube,
+            social.facebook,
+            social.twitter,
+            social.instagram,
+            social.linkedin,
+            social.youtube,
           ].filter(Boolean),
         })}
       </script>
@@ -102,8 +86,8 @@ const SEO = ({ title, description, pathname, image, article }) => {
       {/* Canonical URL */}
       <link rel="canonical" href={seo.url} />
     </>
-  )
-}
+  );
+};
 
 SEO.defaultProps = {
   title: null,
@@ -111,7 +95,7 @@ SEO.defaultProps = {
   pathname: null,
   image: null,
   article: false,
-}
+};
 
 SEO.propTypes = {
   title: PropTypes.string,
@@ -119,6 +103,6 @@ SEO.propTypes = {
   pathname: PropTypes.string,
   image: PropTypes.string,
   article: PropTypes.bool,
-}
+};
 
-export default SEO
+export default SEO;

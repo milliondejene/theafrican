@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { useLocation } from "@reach/router"
 import { graphql } from "gatsby"
 import Layout from "../components/layout/Layout"
@@ -7,6 +7,9 @@ const SearchPage = ({ data }) => {
   const [searchResults, setSearchResults] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const location = useLocation()
+
+  // Ref to focus on the search input
+  const searchInputRef = useRef(null)
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -23,9 +26,14 @@ const SearchPage = ({ data }) => {
       setSearchTerm(query)
       fetchSearchResults(query)
     }
-  }, [location.search])
 
-  const fetchSearchResults = async query => {
+    // Focus the search input after the component mounts
+    if (searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [location.search]) // Focus when location.search changes
+
+  const fetchSearchResults = async (query) => {
     const filteredResults = data.allWpPost.edges.filter(({ node }) =>
       node.title.toLowerCase().includes(query.toLowerCase())
     )
@@ -282,6 +290,7 @@ const SearchPage = ({ data }) => {
         {/* Search Bar */}
         <div className="search-container">
           <input
+            ref={searchInputRef} // Set the ref to focus it
             type="text"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
@@ -303,7 +312,7 @@ const SearchPage = ({ data }) => {
           {searchResults.length > 0 ? (
             searchResults.map(({ node }, index) => (
               <div className="search-result-row" key={index}>
-                {/* Time Ago & Category (for mobile, will stack below each other) */}
+                {/* Time Ago & Category */}
                 <div className="time-category">
                   <div>{node.date}</div>
                   <div className="mobile-category">

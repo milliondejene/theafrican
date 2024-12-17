@@ -49,7 +49,6 @@ const SubcategoryTemplate = ({ data }) => {
       color: #0066cc;
       text-decoration: none;
       display: block;
-      text-align: center;
     }
 
     /* Inline block display for list items */

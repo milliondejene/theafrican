@@ -43,13 +43,14 @@ const Header = () => {
   };
 
   const handleSearchClick = () => {
-    setIsMenuOpen(true);
-    // Focus on the search input when the menu opens
+    navigate("/search");  // Redirect to the search page
+    setIsMenuOpen(false);  // Close the menu when search is clicked
     setTimeout(() => {
+      // Focus on the search input after a short delay
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
-    }, 300); // Add a slight delay to ensure the menu is fully open
+    }, 300);  // Delay to ensure the page is loaded before focusing
   };
 
   const activeSubcategories = getSubcategories(activeCategory);

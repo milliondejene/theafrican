@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/layout/Layout";
+import Seo from "../components/seo"
 
 const HomePage = ({ data }) => {
   return (
@@ -12,5 +13,5 @@ const HomePage = ({ data }) => {
     </Layout>
   );
 };
-
+export const Head = () => <Seo title="Home - theafrican.co" />
 export default HomePage;

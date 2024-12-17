@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
-import { MdSearch, MdExpandMore, MdExpandLess } from "react-icons/md";
+import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import useCategories from "../hooks/useCategories";
 import useActiveCategory from "../hooks/useActiveCategory";
 
-const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
+const SideMenu = ({ isMenuOpen, toggleMenu }) => {
   const { categories, getSubcategories } = useCategories();
   const {
     activeCategory,
@@ -39,30 +39,13 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
       transition: "transform 0.3s ease",
       width: "390px",
       position: "fixed",
-      top: "56px",
+      top: "68px",
       bottom: "0",
       left: "0",
       backgroundColor: "#fff",
       boxShadow: "2px 0 5px rgba(0,0,0,0.5)",
       zIndex: "1000",
       paddingTop: "20px",
-    },
-    searchContainer: {
-      display: "flex",
-      alignItems: "center",
-      padding: "10px",
-      borderBottom: "1px solid #ddd",
-    },
-    searchInput: {
-      border: "1px solid #ddd",
-      borderRadius: "4px",
-      padding: "8px",
-      width: "100%",
-      fontSize: "14px",
-    },
-    searchIcon:{
-      backgroundColor: "black",
-      color: "white",
     },
     categoryItem: {
       padding: "10px",
@@ -92,6 +75,11 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
     activeSubcategory: {
       backgroundColor: "#e9e9e9",
     },
+    categoryLink: {
+      textDecoration: "none",
+      color: "inherit",
+      fontWeight: "600",
+    },
   };
 
   return (
@@ -99,21 +87,6 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
       className={`side-menu ${isMenuOpen ? "open" : ""}`}
       style={styles.sideMenu}
     >
-      {/* Search Bar */}
-      <div className="search-container" style={styles.searchContainer}>
-        <input
-          type="text"
-          ref={searchInputRef}
-          placeholder="Search..."
-          style={styles.searchInput}
-        />
-        <Link to={`/search?q=${searchInputRef.current?.value || ""}`}>
-          <button className="search-icon">
-            <MdSearch size={30} color="#333" style={styles.searchIcon} />
-          </button>
-        </Link>
-      </div>
-
       {/* Categories List */}
       {categories.map((category) => (
         <div key={category.id}>
@@ -140,6 +113,26 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
           {/* Subcategories List */}
           {openCategory === category.slug && (
             <div className="subcategory-list" style={styles.subcategoryList}>
+              {/* First Subcategory as Category Link */}
+              <div
+                className="subcategory-item"
+                style={{
+                  ...styles.subcategoryItem,
+                  ...styles.boldSubcategory, // Apply bold style to the first subcategory (the parent category)
+                  ...(activeSubcategory === category.slug &&
+                    styles.activeSubcategory),
+                }}
+              >
+                <Link
+                  to={`/${category.slug}`} // Link to the category page itself
+                  style={styles.categoryLink}
+                  onClick={() => handleCategoryClick(category.slug)}
+                >
+                  {category.name}
+                </Link>
+              </div>
+
+              {/* Other Subcategories */}
               {getSubcategories(category.slug).map((subcategory) => (
                 <div
                   key={subcategory.id}
@@ -152,7 +145,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu, searchInputRef }) => {
                   }}
                 >
                   <Link
-                    to={`/${category.slug}/${subcategory.slug}`}
+                    to={`/${category.slug}/${subcategory.slug}`} // Link to the subcategory page
                     style={{
                       textDecoration: "none",
                       color: "inherit",

@@ -47,6 +47,9 @@
       border: none;
       cursor: pointer;
     }
+    .search-icon{
+      margin-top: 4px;
+    }
 
     /* ------------------------ Brand Link Styles ------------------------ */
     /* Centered brand link in the middle of the header */
@@ -316,6 +319,8 @@
       /* Hide the separator on mobile */
       separator-mob {
         display: none;
+        margin: 0px;
+        padding: 0px;
       }
 
       /* Hide submenu container on mobile */
