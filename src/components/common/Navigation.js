@@ -52,7 +52,11 @@ const Navigation = ({
         </ul>
       </div>
 
-      <hr className="separator" />
+      {/* Separator is hidden when scrolled, or when on mobile */}
+      <hr
+        className="separator"
+      />
+
       {activeCategory && !isScrolled && ( // Hide subcategories when scrolling
         <div className="submenu-container">
           <div className="subcategories">
@@ -71,9 +75,13 @@ const Navigation = ({
           </div>
         </div>
       )}
+
+      {/* Mobile-specific separator, hidden on mobile */}
       <hr
         className="separator-mob"
-        style={{ display: isMobile ? "none" : "block" }}
+        style={{
+          display: isMobile || isScrolled ? "none" : "block", // Hide separator on mobile or scroll
+        }}
       />
     </nav>
   );

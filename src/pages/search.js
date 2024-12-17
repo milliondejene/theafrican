@@ -172,7 +172,21 @@ const SearchPage = ({ data }) => {
     font-size: 18px;
     color: #555;
   }
-  
+  .go-home-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+}
+    .go-home-button:hover {
+    background-color: #f4f4f4;
+    border-color: #999;
+}
   /* -------------------- Mobile Specific Styles -------------------- */
   /* Mobile screen (max-width: 768px) */
   @media (max-width: 768px) {
@@ -181,7 +195,17 @@ const SearchPage = ({ data }) => {
       flex-direction: column;
       align-items: flex-start;
     }
-  
+        .no-results {
+        font-size: 16px;
+        color: #555;
+    }
+    .go-home-button {
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        padding: 12px 20px;
+        border-radius: 5px;
+    }
     /* Adjust time category on mobile */
     .time-category {
       display: flex;
@@ -257,6 +281,11 @@ const SearchPage = ({ data }) => {
     .search-container {
       gap: 15px; /* Add spacing between elements */
     }
+         .go-home-button {
+        font-size: 18px;
+        padding: 12px 20px;
+        border-radius: 5px;
+    }
   
     /* Ensure input takes up full width on desktop */
     .search-container input {
@@ -320,61 +349,62 @@ const SearchPage = ({ data }) => {
 
         {/* Search Results */}
         <div className="search-results">
-          {searchResults.length > 0 ? (
-            searchResults.map(({ node }, index) => (
-              <div className="search-result-row" key={index}>
-                {/* Time Ago & Category */}
-                <div className="time-category">
-                  <div>{node.date}</div>
-                  <div className="mobile-category">
-                    {node.categories.nodes
-                      .map(category => category.name)
-                      .join(", ")}
-                  </div>
-                </div>
-
-                {/* Title, Excerpt & Featured Image */}
-                <div className="title-excerpt-image">
-                  <div className="text-content">
-                    <h3>
-                      <a href={`/post/${node.slug}`} className="post-link">
-                        {node.title}
-                      </a>
-                    </h3>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: truncateText(node.excerpt, 100),
-                      }}
-                    />
-                    <div className="desktop-category">
-                      {node.categories.nodes
-                        .map(category => category.name)
-                        .join(", ")}
-                    </div>
-                  </div>
-
-                  {/* Featured Image */}
-                  <div className="featured-image">
-                    {node.featuredImage ? (
-                      <img
-                        src={node.featuredImage.node.sourceUrl}
-                        alt={node.title}
-                      />
-                    ) : (
-                      <div className="placeholder-image" />
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="no-results">
-              <h3>Nothing found yet</h3>
-              <p>Please enter a keyword to search or try refining your search.</p>
-              <a href="/" className="go-home-button">Go back to homepage</a>
-            </div>
-          )}
+  {searchResults.length > 0 ? (
+    searchResults.map(({ node }, index) => (
+      <div className="search-result-row" key={index}>
+        {/* Time Ago & Category */}
+        <div className="time-category">
+          <div>{node.date}</div>
+          <div className="mobile-category">
+            {node.categories.nodes
+              .map(category => category.name)
+              .join(", ")}
+          </div>
         </div>
+
+        {/* Title, Excerpt & Featured Image */}
+        <div className="title-excerpt-image">
+          <div className="text-content">
+            <h3>
+              <a href={`/post/${node.slug}`} className="post-link">
+                {node.title}
+              </a>
+            </h3>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: truncateText(node.excerpt, 100),
+              }}
+            />
+            <div className="desktop-category">
+              {node.categories.nodes
+                .map(category => category.name)
+                .join(", ")}
+            </div>
+          </div>
+
+          {/* Featured Image */}
+          <div className="featured-image">
+            {node.featuredImage ? (
+              <img
+                src={node.featuredImage.node.sourceUrl}
+                alt={node.title}
+              />
+            ) : (
+              <div className="placeholder-image" />
+            )}
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div className="no-results">
+      <h3>Nothing found yet</h3>
+      <p>Please enter a keyword to search or try refining your search.</p>
+      <a href="/" className="go-home-button">Go back to homepage</a>
+    </div>
+  )}
+</div>
+
       </div>
     </Layout>
   )
