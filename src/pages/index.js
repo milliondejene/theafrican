@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import Slider from "react-slick";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/seo";
+import PostPreview from "../components/PostPreview"; // Import PostPreview component
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -36,7 +37,7 @@ const HomePage = ({ data }) => {
             <div key={index}>
               <div
                 style={{
-                  height: "60vh", // Adjust height based on the viewport
+                  height: "60vh",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -46,19 +47,10 @@ const HomePage = ({ data }) => {
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   color: "#fff",
-
                 }}
               >
-                <div
-                  style={{
-                    padding: "20px",
-                    maxWidth: "800px",
-                    textAlign: "center",
-                  }}
-                >
-                  <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>
-                    {node.title}
-                  </h1>
+                <div style={{ padding: "20px", maxWidth: "800px", textAlign: "center" }}>
+                  <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>{node.title}</h1>
                   <p style={{ fontSize: "1.1rem", lineHeight: "1.5", color: "lightgreen" }}>
                     Discover inspiring stories on TheAfrican.co
                   </p>
@@ -104,10 +96,7 @@ const HomePage = ({ data }) => {
                   cursor: "pointer",
                 }}
               >
-                <div
-                  className="post-image"
-                  style={{ width: "100%", height: "180px" }}
-                >
+                <div className="post-image" style={{ width: "100%", height: "180px" }}>
                   {node.featuredImage ? (
                     <a href={`/post/${node.slug}`}>
                       <img
@@ -157,6 +146,21 @@ const HomePage = ({ data }) => {
             <p>No posts found.</p>
           )}
         </div>
+      </section>
+
+      {/* Section 3: PostPreview Component */}
+      <section style={{ padding: "40px 20px", backgroundColor: "#f9f9f9" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            marginBottom: "30px",
+            fontSize: "2rem",
+            color: "#333",
+          }}
+        >
+          More Posts
+        </h2>
+        <PostPreview />
       </section>
     </Layout>
   );
