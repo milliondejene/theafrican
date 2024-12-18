@@ -74,11 +74,14 @@ const SearchPage = ({ data }) => {
   /* Container for search input and button */
   .search-container {
     display: flex;
-    justify-content: flex-start; /* Align items to the start */
-    align-items: center; /* Vertically align input and button */
+    justify-content: center; /* Align items to the start */
+   
     gap: 4px; /* Remove gap to keep button next to input */
     margin-bottom: 8px;
     padding: 0 20px;
+     max-width: 600px;
+        margin-right: auto; /* Center the input horizontally */
+    margin-left: auto; /* Center the input horizontally */
   }
   
   /* Search input field */
@@ -375,20 +378,23 @@ const SearchPage = ({ data }) => {
                       .join(", ")}
                   </div>
                 </div>
-
+                <a href={`/post/${node.slug}`} className="post-link">
                 {/* Title, Excerpt & Featured Image */}
                 <div className="title-excerpt-image">
                   <div className="text-content">
-                    <h3>
-                      <a href={`/post/${node.slug}`} className="post-link">
+                   
+                   
+                      <h3>
                         {node.title}
-                      </a>
-                    </h3>
+                        </h3>
+                     
+                 
                     <div
                       dangerouslySetInnerHTML={{
                         __html: truncateText(node.excerpt, 100),
                       }}
                     />
+                   
                     <div className="desktop-category">
                       {node.categories.nodes
                         .map(category => category.name)
@@ -408,6 +414,7 @@ const SearchPage = ({ data }) => {
                     )}
                   </div>
                 </div>
+                </a>
               </div>
             ))
           ) : (
