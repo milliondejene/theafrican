@@ -6,7 +6,7 @@ import useScroll from "../../hooks/useScroll";
 import useActiveCategory from "../../hooks/useActiveCategory";
 import SideMenu from "../SideMenu";
 import Navigation from "./Navigation";
-import { MdSearch } from "react-icons/md";
+import { MdSearch, MdClose } from "react-icons/md";
 import "./Header.css";
 
 const Header = () => {
@@ -21,6 +21,7 @@ const Header = () => {
   } = useActiveCategory(location);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   // Ref to trigger focus on search input
   const searchInputRef = useRef(null);
@@ -43,42 +44,49 @@ const Header = () => {
   };
 
   const handleSearchClick = () => {
-    navigate("/search");  // Redirect to the search page
-    setIsMenuOpen(false);  // Close the menu when search is clicked
+    if (isSearchActive) {
+      navigate(-1); // Go back to the previous page
+    } else {
+      navigate("/search");
+    }
+    setIsSearchActive(!isSearchActive); // Toggle search state
+    setIsMenuOpen(false); // Close the menu
     setTimeout(() => {
-      // Focus on the search input after a short delay
       if (searchInputRef.current) {
         searchInputRef.current.focus();
       }
-    }, 300);  // Delay to ensure the page is loaded before focusing
+    }, 300);
   };
 
   const activeSubcategories = getSubcategories(activeCategory);
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
-      <div className="logo-container">
-        <div className="left-icons">
-          <button onClick={toggleMenu} className="menu-icon">
-            {isMenuOpen ? "X" : "☰"}
-          </button>
-          <button onClick={handleSearchClick} className="search-icon">
-            <MdSearch size={30} color="#333" />
-          </button>
-        </div>
+<div className="logo-container">
+  <div className="left-icons">
+    <button onClick={toggleMenu} className="menu-icon">
+      {isMenuOpen ? "X" : "☰"}
+    </button>
+  </div>
 
-        <Link
-          to="/"
-          className={`brand-link ${isMenuOpen ? "brand-link-active" : ""}`}
-        >
-          TheAfrican
-        </Link>
+  <Link
+    to="/"
+    className={`brand-link ${isMenuOpen ? "brand-link-active" : ""}`}
+  >
+    TheAfrican
+  </Link>
 
-        <div className="right-buttons">
-          <button className="register-button">Register</button>
-          <button className="signin-button">Sign In</button>
-        </div>
-      </div>
+  <div className="right-icons">
+    <button onClick={handleSearchClick} className="search-icon">
+      {isSearchActive ? (
+        <MdClose size={30} color="#333" />
+      ) : (
+        <MdSearch size={30} color="#333" />
+      )}
+    </button>
+  </div>
+</div>
+
 
       <hr className="separator" />
 
@@ -99,7 +107,7 @@ const Header = () => {
         handleSubcategoryClick={handleSubcategoryClick}
         isMenuOpen={isMenuOpen}
         toggleMenu={toggleMenu}
-        searchInputRef={searchInputRef} // Pass the ref to SideMenu
+        searchInputRef={searchInputRef}
       />
 
       <div

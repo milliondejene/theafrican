@@ -41,11 +41,19 @@
       font-size: 1.5rem;
     }
 
+    .right-icons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px; /* Add space between icons, if more are added */
+    }
+
     /* Style for menu and search icons */
     .menu-icon, .search-icon {
       background: transparent; /* Transparent background for icons */
       border: none;
       cursor: pointer;
+
     }
     .search-icon{
       margin-top: 4px;
@@ -63,12 +71,7 @@
     }
 
     /* ------------------------ Right Buttons Section ------------------------ */
-    /* Flex container for Sign In and Register buttons */
-    .right-buttons {
-      display: flex;
-      gap: 10px; /* Add space between buttons */
-    }
-
+ 
     /* Register button styles */
     .register-button {
       background-color: #000;
@@ -117,7 +120,6 @@
 
       /* Left and right icons get adjusted for mobile */
       .left-icons, .right-buttons {
-        flex-basis: 25%; /* Allocate space for both corners */
         justify-content: flex-start;
       }
 

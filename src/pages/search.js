@@ -1,9 +1,7 @@
-
 import React, { useEffect, useState, useRef } from "react"
 import { useLocation } from "@reach/router"
 import { graphql } from "gatsby"
 import Layout from "../components/layout/Layout"
-
 
 const SearchPage = ({ data }) => {
   const [searchResults, setSearchResults] = useState([])
@@ -13,6 +11,10 @@ const SearchPage = ({ data }) => {
   // Ref to focus on the search input
   const searchInputRef = useRef(null)
 
+  // State to track if we are on the search page
+  const [isSearchPage, setIsSearchPage] = useState(false)
+
+  // Helper function to truncate the text
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return `${text.substring(0, maxLength)}...`
@@ -27,6 +29,9 @@ const SearchPage = ({ data }) => {
     if (query) {
       setSearchTerm(query)
       fetchSearchResults(query)
+      setIsSearchPage(true) // Set to true when on the search page
+    } else {
+      setIsSearchPage(false) // Set to false if no query
     }
 
     // Focus the search input after the component mounts
@@ -49,6 +54,11 @@ const SearchPage = ({ data }) => {
       window.history.pushState({}, "", `/search?q=${searchTerm}`)
       fetchSearchResults(searchTerm)
     }
+  }
+
+  // Handle back navigation on click of 'X'
+  const handleGoBack = () => {
+    window.history.back() // Go back to the previous page
   }
 
   return (
@@ -343,68 +353,71 @@ const SearchPage = ({ data }) => {
               fetchSearchResults(searchTerm)
             }}
           >
-            Search
+            {!isSearchPage ? (
+              <span>Search</span>
+            ) : (
+              <span onClick={handleGoBack}>X</span>
+            )}
           </button>
         </div>
 
         {/* Search Results */}
         <div className="search-results">
-  {searchResults.length > 0 ? (
-    searchResults.map(({ node }, index) => (
-      <div className="search-result-row" key={index}>
-        {/* Time Ago & Category */}
-        <div className="time-category">
-          <div>{node.date}</div>
-          <div className="mobile-category">
-            {node.categories.nodes
-              .map(category => category.name)
-              .join(", ")}
-          </div>
-        </div>
+          {searchResults.length > 0 ? (
+            searchResults.map(({ node }, index) => (
+              <div className="search-result-row" key={index}>
+                {/* Time Ago & Category */}
+                <div className="time-category">
+                  <div>{node.date}</div>
+                  <div className="mobile-category">
+                    {node.categories.nodes
+                      .map(category => category.name)
+                      .join(", ")}
+                  </div>
+                </div>
 
-        {/* Title, Excerpt & Featured Image */}
-        <div className="title-excerpt-image">
-          <div className="text-content">
-            <h3>
-              <a href={`/post/${node.slug}`} className="post-link">
-                {node.title}
-              </a>
-            </h3>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: truncateText(node.excerpt, 100),
-              }}
-            />
-            <div className="desktop-category">
-              {node.categories.nodes
-                .map(category => category.name)
-                .join(", ")}
+                {/* Title, Excerpt & Featured Image */}
+                <div className="title-excerpt-image">
+                  <div className="text-content">
+                    <h3>
+                      <a href={`/post/${node.slug}`} className="post-link">
+                        {node.title}
+                      </a>
+                    </h3>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: truncateText(node.excerpt, 100),
+                      }}
+                    />
+                    <div className="desktop-category">
+                      {node.categories.nodes
+                        .map(category => category.name)
+                        .join(", ")}
+                    </div>
+                  </div>
+
+                  {/* Featured Image */}
+                  <div className="featured-image">
+                    {node.featuredImage ? (
+                      <img
+                        src={node.featuredImage.node.sourceUrl}
+                        alt={node.title}
+                      />
+                    ) : (
+                      <div className="placeholder-image" />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-results">
+              <h3>Nothing found yet</h3>
+              <p>Please enter a keyword to search or try refining your search.</p>
+              <a href="/" className="go-home-button">Go back to homepage</a>
             </div>
-          </div>
-
-          {/* Featured Image */}
-          <div className="featured-image">
-            {node.featuredImage ? (
-              <img
-                src={node.featuredImage.node.sourceUrl}
-                alt={node.title}
-              />
-            ) : (
-              <div className="placeholder-image" />
-            )}
-          </div>
+          )}
         </div>
-      </div>
-    ))
-  ) : (
-    <div className="no-results">
-      <h3>Nothing found yet</h3>
-      <p>Please enter a keyword to search or try refining your search.</p>
-      <a href="/" className="go-home-button">Go back to homepage</a>
-    </div>
-  )}
-</div>
-
       </div>
     </Layout>
   )

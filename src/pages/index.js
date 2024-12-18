@@ -15,6 +15,13 @@ const HomePage = ({ data }) => {
     const posts = data.allWpPost.edges.slice(0, 5);
     setLatestPosts(posts);
   }, [data]);
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substr(0, text.lastIndexOf(' ', maxLength)) + '...';
+  };
+  
 
   // Slick carousel settings
   const sliderSettings = {
@@ -32,34 +39,43 @@ const HomePage = ({ data }) => {
     <Layout>
       {/* Section 1: Carousel */}
       <section style={{ margin: "0", padding: "0" }}>
-        <Slider {...sliderSettings}>
-          {latestPosts.map(({ node }, index) => (
-            <div key={index}>
-              <div
-                style={{
-                  height: "60vh",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${node.featuredImage?.node.sourceUrl})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  color: "#fff",
-                }}
-              >
-                <div style={{ padding: "20px", maxWidth: "800px", textAlign: "center" }}>
-                  <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>{node.title}</h1>
-                  <p style={{ fontSize: "1.1rem", lineHeight: "1.5", color: "lightgreen" }}>
-                    Discover inspiring stories on TheAfrican.co
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </section>
+  <Slider {...sliderSettings}>
+    {latestPosts.map(({ node }, index) => (
+      <div key={index}>
+        <div
+          style={{
+            height: "60vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4)), url(${node.featuredImage?.node.sourceUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            color: "#fff",
+          }}
+        >
+          <div style={{ padding: "20px", maxWidth: "800px", textAlign: "center" }}>
+            <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>{node.title}</h1>
+            <p
+              style={{
+                fontSize: "1.1rem",
+                lineHeight: "1.5",
+                color: "lightgreen",
+                textAlign: "center",
+              }}
+            >
+              {truncateText(node.excerpt.replace(/(<([^>]+)>)/gi, ""), 120)}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </Slider>
+</section>
+
+
 
       {/* Section 2: Latest Posts Grid */}
       <section style={{ padding: "40px 20px" }}>
@@ -167,7 +183,6 @@ const HomePage = ({ data }) => {
 };
 
 export const Head = () => <Seo title="Home - TheAfrican.co" />;
-
 export const query = graphql`
   query {
     allWpPost(sort: { fields: date, order: DESC }, limit: 5) {
@@ -175,6 +190,7 @@ export const query = graphql`
         node {
           title
           slug
+          excerpt
           featuredImage {
             node {
               sourceUrl

@@ -10,6 +10,7 @@ const Navigation = ({
   handleSubcategoryClick,
 }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isCategorySelected, setIsCategorySelected] = useState(false); // Track if category is selected
   const { isScrolled } = useScroll(); // Detect if the user has scrolled
 
   // Update screen size on component mount
@@ -23,6 +24,11 @@ const Navigation = ({
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Update isCategorySelected when the activeCategory changes
+  useEffect(() => {
+    setIsCategorySelected(!!activeCategory); // Set true if category is selected
+  }, [activeCategory]);
 
   return (
     <nav>
@@ -40,7 +46,10 @@ const Navigation = ({
           {categories.map((category) => (
             <li key={category.id} className="nav-item">
               <button
-                onClick={() => handleCategoryClick(category.slug)}
+                onClick={() => {
+                  handleCategoryClick(category.slug);
+                  setIsCategorySelected(true); // Mark category as selected
+                }}
                 className={`category-button ${
                   activeCategory === category.slug ? "active" : ""
                 }`}
@@ -52,10 +61,10 @@ const Navigation = ({
         </ul>
       </div>
 
-      {/* Separator is hidden when scrolled, or when on mobile */}
-      <hr
-        className="separator"
-      />
+      {/* Separator is hidden until a category is selected */}
+      {isCategorySelected && !isScrolled && ( // Only show when category is selected and not scrolled
+        <hr className="separator" />
+      )}
 
       {activeCategory && !isScrolled && ( // Hide subcategories when scrolling
         <div className="submenu-container">
