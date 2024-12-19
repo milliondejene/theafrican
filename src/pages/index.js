@@ -4,6 +4,8 @@ import Slider from "react-slick";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/seo";
 import PostPreview from "../components/PostPreview"; // Import PostPreview component
+import { Link } from "gatsby";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -39,40 +41,48 @@ const HomePage = ({ data }) => {
     <Layout>
       {/* Section 1: Carousel */}
       <section style={{ margin: "0", padding: "0" }}>
-  <Slider {...sliderSettings}>
-    {latestPosts.map(({ node }, index) => (
-      <div key={index}>
-        <div
-          style={{
-            height: "60vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4)), url(${node.featuredImage?.node.sourceUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            color: "#fff",
-          }}
-        >
-          <div style={{ padding: "20px", maxWidth: "800px", textAlign: "center" }}>
-            <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>{node.title}</h1>
-            <p
-              style={{
-                fontSize: "1.1rem",
-                lineHeight: "1.5",
-                color: "lightgreen",
-                textAlign: "center",
-              }}
+      <Slider {...sliderSettings}>
+  {latestPosts.map(({ node }, index) => (
+    <div key={index}>
+      <div
+        style={{
+          height: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4)), url(${node.featuredImage?.node.sourceUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          color: "#fff",
+        }}
+      >
+        <div style={{ padding: "20px", maxWidth: "800px", textAlign: "center" }}>
+          <h1 style={{ fontSize: "2rem", marginBottom: "10px" }}>
+            <Link
+              to={`/post/${node.slug}`}
+              style={{ textDecoration: "none", color: "inherit" }}
             >
-              {truncateText(node.excerpt.replace(/(<([^>]+)>)/gi, ""), 120)}
-            </p>
-          </div>
+              {node.title}
+            </Link>
+          </h1>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              lineHeight: "1.5",
+              color: "lightgreen",
+              textAlign: "center",
+            }}
+          >
+            {truncateText(node.excerpt.replace(/(<([^>]+)>)/gi, ""), 120)}
+          </p>
         </div>
       </div>
-    ))}
-  </Slider>
+    </div>
+  ))}
+</Slider>
+
 </section>
 
 
@@ -105,7 +115,7 @@ const HomePage = ({ data }) => {
                 className="post-card"
                 key={index}
                 style={{
-                  borderRadius: "8px",
+                  borderRadius: "2px",
                   overflow: "hidden",
                   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
                   transition: "transform 0.3s ease-in-out",

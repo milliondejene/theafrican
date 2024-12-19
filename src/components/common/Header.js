@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   const handleSearchClick = () => {
-    if (isSearchActive) {
+    if (location.pathname === "/search") {
       navigate(-1); // Go back to the previous page
     } else {
       navigate("/search");
@@ -62,31 +62,30 @@ const Header = () => {
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
-<div className="logo-container">
-  <div className="left-icons">
-    <button onClick={toggleMenu} className="menu-icon">
-      {isMenuOpen ? "X" : "☰"}
-    </button>
-  </div>
+      <div className="logo-container">
+        <div className="left-icons">
+          <button onClick={toggleMenu} className="menu-icon">
+            {isMenuOpen ? "X" : "☰"}
+          </button>
+        </div>
 
-  <Link
-    to="/"
-    className={`brand-link ${isMenuOpen ? "brand-link-active" : ""}`}
-  >
-    TheAfrican
-  </Link>
+        <Link
+          to="/"
+          className={`brand-link ${isMenuOpen ? "brand-link-active" : ""}`}
+        >
+          TheAfrican
+        </Link>
 
-  <div className="right-icons">
-    <button onClick={handleSearchClick} className="search-icon">
-      {isSearchActive ? (
-        <MdClose size={30} color="#333" />
-      ) : (
-        <MdSearch size={30} color="#333" />
-      )}
-    </button>
-  </div>
-</div>
-
+        <div className="right-icons">
+          <button onClick={handleSearchClick} className="search-icon">
+            {location.pathname === "/search" ? (
+              <MdClose size={30} color="#333" />
+            ) : (
+              <MdSearch size={30} color="#333" />
+            )}
+          </button>
+        </div>
+      </div>
 
       <hr className="separator" />
 

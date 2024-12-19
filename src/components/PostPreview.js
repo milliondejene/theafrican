@@ -162,7 +162,7 @@ const PostPreview = () => {
             </Link>
           </div>
         )}
-
+<Link to={`/post/${posts[0].slug}`} style={{ textDecoration: "none", color: "inherit" }}>
         {/* Section 2: Featured Image of Latest Post */}
         {posts[0]?.featuredImage?.node?.sourceUrl && (
           <div className="post-featured-image">
@@ -171,11 +171,13 @@ const PostPreview = () => {
               alt={posts[0].title}
             />
           </div>
+          
         )}
-
+ </Link>
         {/* Section 3: Second Latest Post Image, Title, and Excerpt */}
         {posts[1] && (
           <div className="post-preview-second">
+               <Link to={`/post/${posts[1].slug}`} style={{ textDecoration: "none", color: "inherit" }}>
             {posts[1].featuredImage?.node?.sourceUrl && (
               <div className="post-preview-image">
                 <img
@@ -184,7 +186,7 @@ const PostPreview = () => {
                 />
               </div>
             )}
-            <Link to={`/post/${posts[1].slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+         
               <h3>{posts[1].title}</h3>
               <p
                 dangerouslySetInnerHTML={{
